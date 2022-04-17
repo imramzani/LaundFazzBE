@@ -34,6 +34,7 @@ const typeDefs = gql`
     longitude: String
     latitude: String
     totalPrice: Int
+    Products: [TransactionGetProducts]
   }
 
   type Product {
@@ -48,6 +49,20 @@ const typeDefs = gql`
     ProductId: ID
     Product: Product
     Transaction: Transaction
+  }
+
+  type TransactionGetProducts {
+    id: ID
+    name: String
+    Price: Int
+    Product: Product
+    TransactionProduct: TP
+  }
+
+  type TP {
+    id: ID
+    TransactionId: ID
+    ProductId: ID
   }
 
   type LogInResponse {
@@ -77,14 +92,15 @@ const typeDefs = gql`
   type Mutation {
     userAddTransaction(StaffId: ID!): Transaction
     putTransaction(
-      pickupDate: String,
-      deliveryDate: String,
-      status: String,
-      isPaid: Boolean,
-      longitude: String,
-      latitude: String,
-      totalPrice: Int, 
-      id: ID!): Transaction
+      pickupDate: String
+      deliveryDate: String
+      status: String
+      isPaid: Boolean
+      longitude: String
+      latitude: String
+      totalPrice: Int
+      id: ID!
+    ): Transaction
   }
 `;
 const resolvers = {
@@ -92,13 +108,24 @@ const resolvers = {
     //! Products
     getProducts: async (_, args) => {
       try {
-        const products = await axios.get("http://localhost:3000/products", {
-          headers: {
-            access_token: token_staff,
-          },
-        });
-        if (products) {
-          return products.data;
+        const productsCache = await redis.get("products");
+
+        if (productsCache) {
+          const products = JSON.parse(productsCache);
+          // console.log(products, "Request Cache");
+
+          return products;
+        } else {
+          const products = await axios.get("http://localhost:3000/products", {
+            headers: {
+              access_token: token_staff,
+            },
+          });
+          // console.log(products.data, "Request Server");
+          if (products) {
+            await redis.set("products", JSON.stringify(products.data));
+            return products.data;
+          }
         }
       } catch (err) {
         return err;
@@ -125,16 +152,27 @@ const resolvers = {
     //! Transactions Staff
     getStaffTransactions: async (_, args) => {
       try {
-        const transactions = await axios.get(
-          "http://localhost:3000/staffs/transactions",
-          {
-            headers: {
-              access_token: token_staff,
-            },
+        const transactionsCache = await redis.get("transactions");
+
+        if (transactionsCache) {
+          const transactions = JSON.parse(transactionsCache);
+          console.log(transactions, "Request Cache");
+
+          return transactions;
+        } else {
+          const transactions = await axios.get(
+            "http://localhost:3000/staffs/transactions",
+            {
+              headers: {
+                access_token: token_staff,
+              },
+            }
+          );
+          if (transactions) {
+            console.log(transactions.data, "Request Server");
+            await redis.set("transactions", JSON.stringify(transactions.data));
+            return transactions.data;
           }
-        );
-        if (transactions) {
-          return transactions.data;
         }
       } catch (err) {
         return err;
@@ -161,16 +199,29 @@ const resolvers = {
     //! Transactions User
     getUserTransactions: async (_, args) => {
       try {
-        const transactions = await axios.get(
-          "http://localhost:3000/customers/transactions",
-          {
-            headers: {
-              access_token: token_user,
-            },
+        const transactionsCache = await redis.get("userTransactions");
+
+        if (transactionsCache) {
+          const transactions = JSON.parse(transactionsCache);
+          console.log(transactions, "Request Cache");
+
+          return transactions;
+        } else {
+          const transactions = await axios.get(
+            "http://localhost:3000/customers/transactions",
+            {
+              headers: {
+                access_token: token_user,
+              },
+            }
+          );
+          if (transactions) {
+            await redis.set(
+              "userTransactions",
+              JSON.stringify(transactions.data)
+            );
+            return transactions.data;
           }
-        );
-        if (transactions) {
-          return transactions.data;
         }
       } catch (err) {
         return err;
@@ -197,16 +248,26 @@ const resolvers = {
     //! TransactionProducts
     getTransactionProducts: async () => {
       try {
-        const user = await axios.get(
-          `http://localhost:3000/customers/transactionProducts/${args.id}`,
-          {
-            headers: {
-              access_token: token_staff,
-            },
+        const TPCache = await redis.get("transactionProducts");
+
+        if (TPCache) {
+          const TP = JSON.parse(TPCache);
+          console.log(TP, "Request Cache");
+
+          return TP;
+        } else {
+          const TP = await axios.get(
+            `http://localhost:3000/transactionProducts`,
+            {
+              headers: {
+                access_token: token_staff,
+              },
+            }
+          );
+          if (TP) {
+            await redis.set("transactionProducts", JSON.stringify(TP.data));
+            return TP.data;
           }
-        );
-        if (user) {
-          return user.data;
         }
       } catch (err) {
         return err;
@@ -214,16 +275,17 @@ const resolvers = {
     },
     getTransactionProductById: async (_, args) => {
       try {
-        const user = await axios.get(
-          `http://localhost:3000/customers/transactionProducts/${args.id}`,
+        console.log(args, `MASUK`);
+        const TP = await axios.get(
+          `http://localhost:3000/transactionProducts/${args.id}`,
           {
             headers: {
               access_token: token_staff,
             },
           }
         );
-        if (user) {
-          return user.data;
+        if (TP) {
+          return TP.data;
         }
       } catch (err) {
         return err;
@@ -276,6 +338,7 @@ const resolvers = {
           }
         );
         if (newTransaction) {
+          await redis.del("transactions");
           return newTransaction.data;
         }
       } catch (err) {
@@ -307,7 +370,7 @@ const resolvers = {
           temp.status = status;
         }
         if (isPaid) {
-          console.log(`MASUK`);
+          // console.log(`MASUK`);
           temp.isPaid = isPaid;
         }
         if (longitude) {
@@ -330,6 +393,7 @@ const resolvers = {
           }
         );
         if (newTransaction) {
+          await redis.del("transactions");
           return newTransaction.data;
         }
       } catch (err) {

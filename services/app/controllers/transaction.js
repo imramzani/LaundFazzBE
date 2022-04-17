@@ -29,11 +29,17 @@ class Controller {
 
   static async getTransactions(req, res, next) {
     try {
+      const { StaffId } = req.staff;
       const transactions = await Transaction.findAll({
-        attributes: { exclude: ["createdAt", "updatedAt"] },include: {
-          model: Product
-        }
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        include: {
+          model: Product,
+        },
+        where: {
+          StaffId,
+        },
       });
+      //! Search by StaffId
 
       res.status(200).json(transactions);
     } catch (error) {
@@ -64,6 +70,9 @@ class Controller {
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
           id: transactionId,
+        },
+        include: {
+          model: Product,
         },
       });
       if (!transaction) {
