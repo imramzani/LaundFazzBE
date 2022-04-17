@@ -1,5 +1,5 @@
 const { Customer } = require("../models");
-const {transporter} = require('../helpers/nodemailer')
+const { transporter } = require('../helpers/nodemailer')
 const { signToken } = require("../helpers/jwt");
 const { compare } = require("../helpers/bcrypt");
 const {
@@ -12,7 +12,7 @@ class Controller {
     const t = await sequelize.transaction();
     try {
       const { email, password, name, phoneNumber } = req.body;
-      console.log(req.body,'bbb')
+      console.log(req.body, 'bbb')
       let newCustomer = await Customer.create(
         {
           email,
@@ -23,15 +23,28 @@ class Controller {
         { transaction: t }
       );
 
-      console.log(newCustomer,'kontol')
+      console.log(newCustomer, 'kontol')
       let mailOptions = {
+        // html: 'Embedded image: <img src="cid:xendit"/>',
+        attachments: [{
+          filename: 'xendit.png',
+          path: './views/xendit.png',
+          cid: 'xendit', //same cid value as in the html img src
+        },{
+          filename: 'logo.png',
+          path: './views/logo.png',
+          cid: 'logo', //same cid value as in the html img src
+        }],
         from: "testinghaloprof@gmail.com",
         to: `bintangmuhammadwahid@gmail.com`,
         subject: "Laundry Fazz",
         text: `Telah register di Laundry Fazz.`,
         template: 'email',
         context: {
-          text: 'jembut'
+          nama: "test",
+          // image: ''
+
+
         }
       };
 
@@ -44,9 +57,9 @@ class Controller {
         }
       })
       await t.commit();
-      
+
       res.status(201).json(newCustomer);
-      
+
     } catch (error) {
       await t.rollback();
       next(error);
