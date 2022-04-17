@@ -80,7 +80,7 @@ class Controller {
           name: "transactionNotFound",
         };
       }
-      res.status(200).json(transaction);
+       res.status(200).json(transaction);
     } catch (error) {
       next(error);
     }
