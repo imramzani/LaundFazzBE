@@ -88,30 +88,43 @@ class Controller {
       } = req.body;
       const { transactionId } = req.params;
 
+      let temp = {};
+
+      if (pickupDate) {
+        temp.pickupDate = pickupDate;
+      }
+      if (deliveryDate) {
+        temp.deliveryDate = deliveryDate;
+      }
+      if (status) {
+        temp.status = status;
+      }
+      if (isPaid) {
+        temp.isPaid = isPaid;
+      }
+      if (longitude) {
+        temp.longitude = longitude;
+      }
+      if (latitude) {
+        temp.latitude = latitude;
+      }
+      if (totalPrice) {
+        temp.totalPrice = latitude;
+      }
+
       const transaction = await Transaction.findByPk(transactionId);
 
       if (!transaction) {
         throw { name: "transactionNotFound" };
       }
 
-      let newTransaction = await Transaction.update(
-        {
-          pickupDate,
-          deliveryDate,
-          status,
-          isPaid,
-          longitude,
-          latitude,
-          totalPrice,
+      let newTransaction = await Transaction.update(temp, {
+        where: {
+          id: transactionId,
         },
-        {
-          where: {
-            id: transactionId,
-          },
-          returning: true,
-          transaction: t,
-        }
-      );
+        returning: true,
+        transaction: t,
+      });
 
       await t.commit();
       res.status(200).json({
