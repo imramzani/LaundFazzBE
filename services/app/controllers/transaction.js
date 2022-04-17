@@ -1,4 +1,4 @@
-const { Transaction } = require("../models");
+const { Transaction, Product } = require("../models");
 const {
   sequelize,
   Sequelize: { Op },
@@ -30,7 +30,9 @@ class Controller {
   static async getTransactions(req, res, next) {
     try {
       const transactions = await Transaction.findAll({
-        attributes: { exclude: ["createdAt", "updatedAt"] },
+        attributes: { exclude: ["createdAt", "updatedAt"] },include: {
+          model: Product
+        }
       });
 
       res.status(200).json(transactions);

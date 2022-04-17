@@ -11,12 +11,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    let data = JSON.parse(fs.readFileSync("./data/transactions.json"));
+    let data = JSON.parse(fs.readFileSync("./data/transactionProducts.json"));
     data.forEach((el) => {
       el.createdAt = new Date();
       el.updatedAt = new Date();
     });
-    await queryInterface.bulkInsert("Transactions", data);
+    await queryInterface.bulkInsert("TransactionProducts", data);
   },
 
   async down(queryInterface, Sequelize) {
@@ -26,6 +26,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("Transactions", null);
+    await queryInterface.bulkDelete("TransactionProducts", null);
   },
 };
