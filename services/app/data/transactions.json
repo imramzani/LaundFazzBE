@@ -1,0 +1,68 @@
+[
+  {
+    "CustomerId": 1,
+    "StaffId": 1,
+    "isPaid": false,
+    "status": "pending",
+    "pickupDate": null,
+    "deliveryDate": null,
+    "longitude": null,
+    "latitude": null,
+    "totalPrice": null
+  },
+  {
+    "CustomerId": 2,
+    "StaffId": 1,
+    "isPaid": false,
+    "status": "pending",
+    "pickupDate": null,
+    "deliveryDate": null,
+    "longitude": null,
+    "latitude": null,
+    "totalPrice": null
+  },
+  {
+    "CustomerId": 1,
+    "StaffId": 1,
+    "isPaid": false,
+    "status": "pending",
+    "pickupDate": null,
+    "deliveryDate": null,
+    "longitude": null,
+    "latitude": null,
+    "totalPrice": null
+  },
+  {
+    "CustomerId": 2,
+    "StaffId": 1,
+    "isPaid": false,
+    "status": "pending",
+    "pickupDate": null,
+    "deliveryDate": null,
+    "longitude": null,
+    "latitude": null,
+    "totalPrice": null
+  },
+  {
+    "CustomerId": 1,
+    "StaffId": 1,
+    "isPaid": false,
+    "status": "pending",
+    "pickupDate": null,
+    "deliveryDate": null,
+    "longitude": null,
+    "latitude": null,
+    "totalPrice": null
+  },
+  {
+    "CustomerId": 2,
+    "StaffId": 1,
+    "isPaid": false,
+    "status": "pending",
+    "pickupDate": null,
+    "deliveryDate": null,
+    "longitude": null,
+    "latitude": null,
+    "totalPrice": null
+  }
+]
