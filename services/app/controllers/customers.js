@@ -1,4 +1,5 @@
 const { Customer } = require("../models");
+const {transporter} = require('../helpers/nodemailer')
 const { signToken } = require("../helpers/jwt");
 const { compare } = require("../helpers/bcrypt");
 const {
@@ -11,6 +12,7 @@ class Controller {
     const t = await sequelize.transaction();
     try {
       const { email, password, name, phoneNumber } = req.body;
+      console.log(req.body,'bbb')
       let newCustomer = await Customer.create(
         {
           email,
@@ -21,8 +23,30 @@ class Controller {
         { transaction: t }
       );
 
+      console.log(newCustomer,'kontol')
+      let mailOptions = {
+        from: "testinghaloprof@gmail.com",
+        to: `bintangmuhammadwahid@gmail.com`,
+        subject: "Laundry Fazz",
+        text: `Telah register di Laundry Fazz.`,
+        template: 'email',
+        context: {
+          text: 'jembut'
+        }
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err, 'vvvv')
+          throw ({ name: 'nodemailer error' })
+        } else {
+          console.log("Email Sent:" + info.response);
+        }
+      })
       await t.commit();
+      
       res.status(201).json(newCustomer);
+      
     } catch (error) {
       await t.rollback();
       next(error);
