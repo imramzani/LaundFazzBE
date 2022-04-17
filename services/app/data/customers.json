@@ -1,0 +1,14 @@
+[
+  {
+    "email": "customer1@mail.com",
+    "password": "testing",
+    "name": "customer1",
+    "phoneNumber": "123456"
+  },
+  {
+    "email": "customer2@mail.com",
+    "password": "testing",
+    "name": "customer2",
+    "phoneNumber": "123456"
+  }
+]
