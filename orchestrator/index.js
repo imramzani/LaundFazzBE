@@ -29,8 +29,8 @@ const typeDefs = gql`
     StaffId: ID
     isPaid: Boolean
     status: String
-    pickupDate: Date
-    deliveryDate: Date
+    pickupDate: String
+    deliveryDate: String
     longitude: String
     latitude: String
     totalPrice: Int
@@ -62,29 +62,29 @@ const typeDefs = gql`
   }
 
   type Query {
-    getProfile: Customer
-    getUserById(id: ID): Customer
-    getStaffs: [Staff]
-    getStaffById(id: ID): Staff
-    getProducts(access_token: String!): [Product]
-    getProductById(access_token: String!, id: ID!): Product
-    getStaffTransactions(access_token: String!): [Transaction]
-    getStaffTransactionById(access_token: String!, id: ID!): Transaction
-    getUserTransactions(access_token: String!): [Transaction]
-    getUserTransactionById(access_token: String!, id: ID!): Transaction
-    getTransactionProducts(access_token: String!): [TransactionProduct]
-    getTransactionProductById(
-      access_token: String!
-      id: ID!
-    ): TransactionProduct
-    loginUser(email: ID, password: string!): LogInResponse
-    loginStaff(email: ID, password: string!): LogInResponse
+    getProducts: [Product]
+    getProductById(id: ID!): Product
+    getStaffTransactions: [Transaction]
+    getStaffTransactionById(id: ID!): Transaction
+    getUserTransactions: [Transaction]
+    getUserTransactionById(id: ID!): Transaction
+    getTransactionProducts: [TransactionProduct]
+    getTransactionProductById(id: ID!): TransactionProduct
+    loginUser(email: ID, password: String!): LogInResponse
+    loginStaff(email: ID, password: String!): LogInResponse
   }
 
   type Mutation {
-    addTransaction(
-      StaffId: ID!
-    ): Transaction
+    userAddTransaction(StaffId: ID!): Transaction
+    putTransaction(
+      pickupDate: String,
+      deliveryDate: String,
+      status: String,
+      isPaid: Boolean,
+      longitude: String,
+      latitude: String,
+      totalPrice: Int, 
+      id: ID!): Transaction
   }
 `;
 const resolvers = {
@@ -107,7 +107,7 @@ const resolvers = {
     getProductById: async (_, args) => {
       try {
         const product = await axios.get(
-          `http://localhost:3000/products/${args.ID}`,
+          `http://localhost:3000/products/${args.id}`,
           {
             headers: {
               access_token: token_staff,
@@ -143,7 +143,7 @@ const resolvers = {
     getStaffTransactionById: async (_, args) => {
       try {
         const transactions = await axios.get(
-          `http://localhost:3000/staffs/transactions/${args.ID}`,
+          `http://localhost:3000/staffs/transactions/${args.id}`,
           {
             headers: {
               access_token: token_staff,
@@ -179,7 +179,7 @@ const resolvers = {
     getUserTransactionById: async (_, args) => {
       try {
         const transactions = await axios.get(
-          `http://localhost:3000/customers/transactions/${args.ID}`,
+          `http://localhost:3000/customers/transactions/${args.id}`,
           {
             headers: {
               access_token: token_user,
@@ -198,7 +198,7 @@ const resolvers = {
     getTransactionProducts: async () => {
       try {
         const user = await axios.get(
-          `http://localhost:3000/customers/transactionProducts/${args.ID}`,
+          `http://localhost:3000/customers/transactionProducts/${args.id}`,
           {
             headers: {
               access_token: token_staff,
@@ -215,7 +215,7 @@ const resolvers = {
     getTransactionProductById: async (_, args) => {
       try {
         const user = await axios.get(
-          `http://localhost:3000/customers/transactionProducts/${args.ID}`,
+          `http://localhost:3000/customers/transactionProducts/${args.id}`,
           {
             headers: {
               access_token: token_staff,
@@ -260,17 +260,77 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (_, args) => {
-      const { email, password } = args;
+    userAddTransaction: async (_, args) => {
+      const { StaffId } = args;
+
       try {
-        const user = await axios({
-          method: "POST",
-          url: "http://localhost:4001/login",
-          data: args,
-        });
-        if (user) {
-          console.log(user.data.access_token);
-          return user.data;
+        const newTransaction = await axios.post(
+          `http://localhost:3000/customers/transactions`,
+          {
+            StaffId,
+          },
+          {
+            headers: {
+              access_token: token_user,
+            },
+          }
+        );
+        if (newTransaction) {
+          return newTransaction.data;
+        }
+      } catch (err) {
+        return err;
+      }
+    },
+    putTransaction: async (_, args) => {
+      const {
+        pickupDate,
+        deliveryDate,
+        status,
+        isPaid,
+        longitude,
+        latitude,
+        totalPrice,
+      } = args;
+      console.log(args);
+
+      try {
+        let temp = {};
+
+        if (pickupDate) {
+          temp.pickupDate = pickupDate;
+        }
+        if (deliveryDate) {
+          temp.deliveryDate = deliveryDate;
+        }
+        if (status) {
+          temp.status = status;
+        }
+        if (isPaid) {
+          console.log(`MASUK`);
+          temp.isPaid = isPaid;
+        }
+        if (longitude) {
+          temp.longitude = longitude;
+        }
+        if (latitude) {
+          temp.latitude = latitude;
+        }
+        if (totalPrice) {
+          temp.totalPrice = latitude;
+        }
+        console.log(temp, isPaid);
+        const newTransaction = await axios.put(
+          `http://localhost:3000/staffs/transactions/${args.id}`,
+          temp,
+          {
+            headers: {
+              access_token: token_staff,
+            },
+          }
+        );
+        if (newTransaction) {
+          return newTransaction.data;
         }
       } catch (err) {
         return err;
@@ -284,6 +344,6 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers });
 
 // The `listen` method launches a web server.
-server.listen().then(({ url }) => {
+server.listen(PORT).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });

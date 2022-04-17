@@ -10,6 +10,7 @@ class Controller {
     try {
       const { StaffId } = req.body;
       const { CustomerId } = req.customer;
+      console.log(StaffId, CustomerId, `<<<<<<<<<<<<<`);
       let newTransaction = await Transaction.create(
         {
           CustomerId,
@@ -127,10 +128,7 @@ class Controller {
       });
 
       await t.commit();
-      res.status(200).json({
-        message: "Transaction updated",
-        transaction: newTransaction[1][0],
-      });
+      res.status(200).json(newTransaction[1][0]);
     } catch (error) {
       await t.rollback();
       next(error);
