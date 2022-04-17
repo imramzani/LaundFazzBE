@@ -3,6 +3,7 @@ const {
   sequelize,
   Sequelize: { Op },
 } = require("../models");
+const axios = require("axios");
 
 class Controller {
   static async addTransactionProduct(req, res, next) {
@@ -66,12 +67,16 @@ class Controller {
           id: TPId,
         },
       });
+
       if (!TP) {
         throw {
           name: "transactionProductNotFound",
         };
       }
-      res.status(200).json(TP);
+      if (TP.isPaid) {
+        res.status(200).json(TP);
+      }
+      res.status(200).json({ TP, data });
     } catch (error) {
       next(error);
     }

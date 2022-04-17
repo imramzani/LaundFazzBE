@@ -1,14 +1,14 @@
 [
   {
-    "email": "customer1@mail.com",
+    "email": "andrizal.cs@gmail.com",
     "password": "testing",
-    "name": "customer1",
-    "phoneNumber": "123456"
+    "name": "Andrizal Chaidar",
+    "phoneNumber": "0218022813"
   },
   {
-    "email": "customer2@mail.com",
+    "email": "imrshadow@gmail.com",
     "password": "testing",
-    "name": "customer2",
-    "phoneNumber": "123456"
+    "name": "Imam Ramzani",
+    "phoneNumber": "081299887766"
   }
 ]
