@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         type: DataTypes.STRING,
-        defaultValue: "Pending",
+        defaultValue: "pending",
       },
       pickupDate: DataTypes.DATE,
       deliveryDate: DataTypes.DATE,

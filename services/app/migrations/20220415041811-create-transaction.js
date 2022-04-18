@@ -32,7 +32,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: "Pending",
+        defaultValue: "pending",
       },
       pickupDate: {
         type: Sequelize.DATE,
