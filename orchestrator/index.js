@@ -442,28 +442,28 @@ const resolvers = {
         return err;
       }
     },
-  },
-  staffPatchPosition: async (_, args) => {
-    const { longitude, latitude } = args;
-    try {
-      const staff = await axios.patch(
-        `http://localhost:3000/staffs`,
-        {
-          longitude,
-          latitude,
-        },
-        {
-          headers: {
-            access_token: token_staff,
+    staffPatchPosition: async (_, args) => {
+      const { longitude, latitude } = args;
+      try {
+        const staff = await axios.patch(
+          `http://localhost:3000/staffs`,
+          {
+            longitude,
+            latitude,
           },
+          {
+            headers: {
+              access_token: token_staff,
+            },
+          }
+        );
+        if (staff) {
+          return staff.data;
         }
-      );
-      if (staff) {
-        return staff.data;
+      } catch (err) {
+        return err;
       }
-    } catch (err) {
-      return err;
-    }
+    },
   },
 };
 
