@@ -256,34 +256,3 @@ describe(`PUT /staffs/transactions`, () => {
     });
   });
 });
-
-// describe(`POST /transactionProducts`, () => {
-//   describe(`POST /transactionProducts sukses`, () => {
-//     it(`should return array of object with status 200`, async () => {
-//       const res = await request(app)
-//         .get("/transactionProducts")
-//         .send({ StaffId })
-//         .set("access_token", token_user);
-//       expect(res.status).toBe(201);
-//       expect(res.body).toBeInstanceOf(Object);
-//     });
-//   });
-
-  // describe(`POST /transactionProducts sukses`, () => {
-  //   it(`should return array of object with status 200`, async () => {
-  //     const res = await request(app)
-  //       .post("/transactionProducts")
-  //       .set("access_token", token_user);
-  //     expect(res.status).toBe(200);
-  //     expect(res.body).toBeInstanceOf(Object);
-  //   });
-  // });
-
-  // describe(`POST /transactionProducts sukses`, () => {
-  //   it(`should return array of object with status 200`, async () => {
-  //     const res = await request(app).get("/transactionProducts");
-  //     expect(res.status).toBe(200);
-  //     expect(res.body).toBeInstanceOf(Object);
-  //   });
-  // });
-// });

@@ -12,7 +12,7 @@ class Controller{
         //   if(!transactionById){
         //     throw { name: "transactionNotFound" };
         //   }
-        //   transactionById.isPaid = true
+        // await transactionById.update({isPaid:true, status:'onProgress'})
     
         //   let mailOptions = {
         //     // html: 'Embedded image: <img src="cid:xendit"/>',

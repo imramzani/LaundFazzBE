@@ -163,6 +163,16 @@ describe(`POST /staffs/login`, () => {
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
     });
+    it(`empty password and email with status 401`, async () => {
+      const data = {
+        email: "",
+        password: "",
+      };
+      const res = await request(app).post("/staffs/login").send(data);
+      expect(res.status).toBe(401);
+      expect(res.body).toHaveProperty("Error");
+      expect(res.body).toHaveProperty("Error", expect.any(String));
+    });
   });
 });
 

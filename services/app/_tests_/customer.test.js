@@ -157,6 +157,16 @@ describe(`POST /customer/login`, () => {
           `Wrong customer email or password`
         );
       });
+      it(`empty password and email with status 401`, async () => {
+        const data = {
+          email: "",
+          password: "",
+        };
+        const res = await request(app).post("/customers/login").send(data);
+        expect(res.status).toBe(401);
+        expect(res.body).toHaveProperty("Error");
+        expect(res.body).toHaveProperty("Error", expect.any(String));
+      });
     });
   });
 });

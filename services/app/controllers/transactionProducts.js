@@ -82,31 +82,31 @@ class Controller {
     }
   }
 
-  static async deleteTransactionProduct(req, res, next) {
-    const t = await sequelize.transaction();
-    try {
-      const { TPId } = req.params;
+  // static async deleteTransactionProduct(req, res, next) {
+  //   const t = await sequelize.transaction();
+  //   try {
+  //     const { TPId } = req.params;
 
-      const TP = await TransactionProduct.findByPk(TPId);
+  //     const TP = await TransactionProduct.findByPk(TPId);
 
-      if (!TP) {
-        throw { name: "transactionProductNotFound" };
-      }
+  //     if (!TP) {
+  //       throw { name: "transactionProductNotFound" };
+  //     }
 
-      await TransactionProduct.destroy({
-        where: {
-          id: TPId,
-        },
-        transaction: t,
-      });
+  //     await TransactionProduct.destroy({
+  //       where: {
+  //         id: TPId,
+  //       },
+  //       transaction: t,
+  //     });
 
-      await t.commit();
-      res.status(200).json({ message: `TransactionProduct Deleted` });
-    } catch (error) {
-      await t.rollback();
-      next(error);
-    }
-  }
+  //     await t.commit();
+  //     res.status(200).json({ message: `TransactionProduct Deleted` });
+  //   } catch (error) {
+  //     await t.rollback();
+  //     next(error);
+  //   }
+  // }
 }
 
 module.exports = Controller;

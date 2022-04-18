@@ -7,7 +7,7 @@ const transactions = require("./staffTransactions");
 
 router.post("/register", Controller.register);
 router.post("/login", Controller.login);
-router.get("/:staffId", Controller.profile);
+// router.get("/:staffId", Controller.profile);
 
 router.use(authentication);
 // router.delete("/", authorization, Controller.deleteStore);
