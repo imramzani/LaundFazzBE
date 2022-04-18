@@ -65,6 +65,9 @@ function errorHandler(err, req, res, next) {
     case "staffLogin noInput":
       res.status(401).json({ Error: "Email and Password is required" });
       break;
+    case "fail TP bulkCreate":
+      res.status(400).json({ Error: "Fail to create TransactionProducts" });
+      break;
     default:
       res.status(500).json({ Error: "Internal server error" });
       break;

@@ -1,4 +1,4 @@
-const { Transaction, Product, Customer } = require("../models");
+const { Transaction, Product, Customer, TransactionProduct } = require("../models");
 const {
   sequelize,
   Sequelize: { Op },
@@ -9,16 +9,36 @@ class Controller {
   static async addTransaction(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      const { StaffId } = req.body;
+      const { StaffId, productArrays, totalPrice } = req.body;
       const { CustomerId } = req.customer;
       console.log(StaffId, CustomerId, `<<<<<<<<<<<<<`);
       let newTransaction = await Transaction.create(
         {
           CustomerId,
           StaffId,
+          totalPrice
         },
         { transaction: t }
       );
+      
+      //!Bulk Create TP
+      let TPArrays = productArrays.map((e) => {
+        let result = {}
+        result.TransactionId = newTransaction.id
+        result.ProductId = e
+        result.createdAt = new Date();
+        result.updatedAt = new Date();
+        return result
+      });
+
+      let newTP = await TransactionProduct.bulkCreate(TPArrays, {
+        transaction: t,
+        returning: true
+      });
+
+      if (!newTP.length) {
+        throw {name: "fail TP bulkCreate"}
+      }
 
       await t.commit();
       res.status(201).json(newTransaction);
@@ -79,6 +99,7 @@ class Controller {
         },
         include: {
           model: Product,
+          attributes: { exclude: ["createdAt", "updatedAt"] }
         },
       });
       if (!transaction) {

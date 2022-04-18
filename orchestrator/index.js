@@ -37,6 +37,11 @@ const typeDefs = gql`
     Products: [TransactionGetProducts]
   }
 
+  type CustomerName {
+    name: String
+    email: String
+  }
+
   type Product {
     id: ID
     name: String
@@ -77,6 +82,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    getCustomerName: CustomerName
     getProducts: [Product]
     getProductById(id: ID!): Product
     getStaffTransactions: [Transaction]
@@ -87,10 +93,15 @@ const typeDefs = gql`
     getTransactionProductById(id: ID!): TransactionProduct
     loginUser(email: ID, password: String!): LogInResponse
     loginStaff(email: ID, password: String!): LogInResponse
+    getStaff(id: ID!): Staff
   }
 
   type Mutation {
-    userAddTransaction(StaffId: ID!): Transaction
+    userAddTransaction(
+      StaffId: ID!
+      productArrays: [Int]
+      totalPrice: Int
+    ): Transaction
     putTransaction(
       pickupDate: String
       deliveryDate: String
@@ -101,6 +112,7 @@ const typeDefs = gql`
       totalPrice: Int
       id: ID!
     ): Transaction
+    staffPatchPosition(longitude: String, latitude: String): Staff
   }
 `;
 const resolvers = {
@@ -152,6 +164,7 @@ const resolvers = {
     //! Transactions Staff
     getStaffTransactions: async (_, args) => {
       try {
+        // await redis.del("transactions");
         const transactionsCache = await redis.get("transactions");
 
         if (transactionsCache) {
@@ -199,6 +212,7 @@ const resolvers = {
     //! Transactions User
     getUserTransactions: async (_, args) => {
       try {
+        // await redis.del("userTransactions");
         const transactionsCache = await redis.get("userTransactions");
 
         if (transactionsCache) {
@@ -248,6 +262,7 @@ const resolvers = {
     //! TransactionProducts
     getTransactionProducts: async () => {
       try {
+        // await redis.del("transactionProducts");
         const TPCache = await redis.get("transactionProducts");
 
         if (TPCache) {
@@ -275,7 +290,6 @@ const resolvers = {
     },
     getTransactionProductById: async (_, args) => {
       try {
-        console.log(args, `MASUK`);
         const TP = await axios.get(
           `http://localhost:3000/transactionProducts/${args.id}`,
           {
@@ -319,17 +333,45 @@ const resolvers = {
         return err;
       }
     },
+    getCustomerName: async (_, args) => {
+      try {
+        const user = await axios.get(`http://localhost:3000/customers/`, {
+          headers: {
+            access_token: token_user,
+          },
+        });
+        if (user) {
+          return user.data;
+        }
+      } catch (err) {
+        return err;
+      }
+    },
+    getStaff: async (_, args) => {
+      try {
+        const staff = await axios.get(
+          `http://localhost:3000/staffs/${args.id}`
+        );
+        if (staff) {
+          return staff.data;
+        }
+      } catch (err) {
+        return err;
+      }
+    },
   },
 
   Mutation: {
     userAddTransaction: async (_, args) => {
-      const { StaffId } = args;
+      const { StaffId, productArrays, totalPrice } = args;
 
       try {
         const newTransaction = await axios.post(
           `http://localhost:3000/customers/transactions`,
           {
             StaffId,
+            productArrays,
+            totalPrice,
           },
           {
             headers: {
@@ -400,6 +442,28 @@ const resolvers = {
         return err;
       }
     },
+  },
+  staffPatchPosition: async (_, args) => {
+    const { longitude, latitude } = args;
+    try {
+      const staff = await axios.patch(
+        `http://localhost:3000/staffs`,
+        {
+          longitude,
+          latitude,
+        },
+        {
+          headers: {
+            access_token: token_staff,
+          },
+        }
+      );
+      if (staff) {
+        return staff.data;
+      }
+    } catch (err) {
+      return err;
+    }
   },
 };
 
