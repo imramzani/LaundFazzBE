@@ -66,25 +66,46 @@ class Controller {
     }
   }
 
-  // static async profile(req, res, next) {
-  //   try {
-  //     const { StaffId } = req.staff;
-  //     const staff = await Staff.findOne({
-  //       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-  //       where: {
-  //         id: StaffId,
-  //       },
-  //     });
-  //     if (!staff) {
-  //       throw {
-  //         name: "staffNotFound",
-  //       };
-  //     }
-  //     res.status(200).json(staff);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  static async profile(req, res, next) {
+    try {
+      const { staffId } = req.params;
+      const staff = await Staff.findOne({
+        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+        where: {
+          id: staffId,
+        },
+      });
+      if (!staff) {
+        throw {
+          name: "staffNotFound",
+        };
+      }
+      res.status(200).json(staff);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async patchStaff(req, res, next) {
+    try {
+      const { StaffId } = req.staff;
+      const { longitude, latitude } = req.body;
+      const staff = await Staff.update(
+        { longitude, latitude },
+        {
+          where: {
+            id: StaffId,
+          },
+          returning: true,
+        }
+      );
+      const objStaff = staff[1][0];
+      delete objStaff.password
+      res.status(200).json(objStaff);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   // static async deleteStore(req, res, next) {
   //   const t = await sequelize.transaction();
