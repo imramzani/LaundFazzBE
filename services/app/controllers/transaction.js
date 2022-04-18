@@ -92,6 +92,7 @@ class Controller {
   static async getTransactionById(req, res, next) {
     try {
       const { transactionId } = req.params;
+      console.log(req.params, 'kontol2')
       const transaction = await Transaction.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -142,40 +143,40 @@ class Controller {
   static async editTransaction(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      const {
-        pickupDate,
-        deliveryDate,
-        status,
-        isPaid,
-        longitude,
-        latitude,
-        totalPrice,
-      } = req.body;
+      // const {
+      //   pickupDate,
+      //   deliveryDate,
+      //   status,
+      //   isPaid,
+      //   longitude,
+      //   latitude,
+      //   totalPrice,
+      // } = req.body;
       const { transactionId } = req.params;
 
-      let temp = {};
+      // let temp = {};
 
-      if (pickupDate) {
-        temp.pickupDate = pickupDate;
-      }
-      if (deliveryDate) {
-        temp.deliveryDate = deliveryDate;
-      }
-      if (status) {
-        temp.status = status;
-      }
-      if (isPaid) {
-        temp.isPaid = isPaid;
-      }
-      if (longitude) {
-        temp.longitude = longitude;
-      }
-      if (latitude) {
-        temp.latitude = latitude;
-      }
-      if (totalPrice) {
-        temp.totalPrice = latitude;
-      }
+      // if (pickupDate) {
+      //   temp.pickupDate = pickupDate;
+      // }
+      // if (deliveryDate) {
+      //   temp.deliveryDate = deliveryDate;
+      // }
+      // if (status) {
+      //   temp.status = status;
+      // }
+      // if (isPaid) {
+      //   temp.isPaid = isPaid;
+      // }
+      // if (longitude) {
+      //   temp.longitude = longitude;
+      // }
+      // if (latitude) {
+      //   temp.latitude = latitude;
+      // }
+      // if (totalPrice) {
+      //   temp.totalPrice = latitude;
+      // }
 
       const transaction = await Transaction.findByPk(transactionId);
 
@@ -183,7 +184,7 @@ class Controller {
         throw { name: "transactionNotFound" };
       }
 
-      let newTransaction = await Transaction.update(temp, {
+      let newTransaction = await Transaction.update({status:'done'}, {
         where: {
           id: transactionId,
         },
@@ -199,31 +200,31 @@ class Controller {
     }
   }
 
-  static async deleteTransaction(req, res, next) {
-    const t = await sequelize.transaction();
-    try {
-      const { transactionId } = req.params;
+  // static async deleteTransaction(req, res, next) {
+  //   const t = await sequelize.transaction();
+  //   try {
+  //     const { transactionId } = req.params;
 
-      const transaction = await Transaction.findByPk(transactionId);
+  //     const transaction = await Transaction.findByPk(transactionId);
 
-      if (!transaction) {
-        throw { name: "transactionNotFound" };
-      }
+  //     if (!transaction) {
+  //       throw { name: "transactionNotFound" };
+  //     }
 
-      await Transaction.destroy({
-        where: {
-          id: transactionId,
-        },
-        transaction: t,
-      });
+  //     await Transaction.destroy({
+  //       where: {
+  //         id: transactionId,
+  //       },
+  //       transaction: t,
+  //     });
 
-      await t.commit();
-      res.status(200).json({ message: `Transaction Deleted` });
-    } catch (error) {
-      await t.rollback();
-      next(error);
-    }
-  }
+  //     await t.commit();
+  //     res.status(200).json({ message: `Transaction Deleted` });
+  //   } catch (error) {
+  //     await t.rollback();
+  //     next(error);
+  //   }
+  // }
 }
 
 module.exports = Controller;

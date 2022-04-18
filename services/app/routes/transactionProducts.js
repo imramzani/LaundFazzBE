@@ -7,6 +7,6 @@ router.use(authentication);
 router.get("/", Controller.getTransactionProducts);
 router.post("/", Controller.addTransactionProduct);
 router.get("/:TPId", Controller.getTransactionProductById);
-router.delete("/:TPId", Controller.deleteTransactionProduct);
+// router.delete("/:TPId", Controller.deleteTransactionProduct);
 
 module.exports = router;

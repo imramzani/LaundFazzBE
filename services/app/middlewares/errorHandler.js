@@ -20,24 +20,24 @@ function errorHandler(err, req, res, next) {
     case "JsonWebTokenError":
       res.status(401).json({ Error: "Invalid token" });
       break;
-    case "TokenExpiredError":
-      res.status(401).json({ Error: "Token expired" });
-      break;
+    // case "TokenExpiredError":
+    //   res.status(401).json({ Error: "Token expired" });
+    //   break;
     case "customerAuthc Failed":
       res.status(401).json({ Error: "Invalid token or customer" });
       break;
     case "staffAuthc Failed":
       res.status(401).json({ Error: "Invalid token or staff" });
       break;
-    case "staffAuthz Failed":
-      res.status(403).json({ Error: "Forbidden to modify or read item" });
-      break;
-    case "customerAuthz Failed":
-      res.status(403).json({ Error: "Forbidden to modify or read item" });
-      break;
-    case "custTransactionAuthz Failed":
-      res.status(403).json({ Error: "Forbidden to modify or read item" });
-      break;
+    // case "staffAuthz Failed":
+    //   res.status(403).json({ Error: "Forbidden to modify or read item" });
+    //   break;
+    // case "customerAuthz Failed":
+    //   res.status(403).json({ Error: "Forbidden to modify or read item" });
+    //   break;
+    // case "custTransactionAuthz Failed":
+    //   res.status(403).json({ Error: "Forbidden to modify or read item" });
+    //   break;
     case "customerNotFound":
       res.status(404).json({ Error: "Customer not found" });
       break;

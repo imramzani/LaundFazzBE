@@ -8,7 +8,9 @@
     "testdb": "npx sequelize-cli --env=test db:drop && npx sequelize-cli --env=test db:create && npx sequelize-cli --env=test db:migrate && npx sequelize-cli --env=test db:seed:all",
     "custTest": "npx jest customer.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "staffTest": "npx jest staff.test.js --detectOpenHandles --forceExit --runInBand --coverage",
+    "productTest": "npx jest product.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "transactionTest": "npx jest transaction.test.js --detectOpenHandles --forceExit --runInBand --coverage",
+    "xenditTest": "npx jest xendit.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "test": "npx jest --detectOpenHandles --forceExit --runInBand --coverage"
   },
   "repository": {
