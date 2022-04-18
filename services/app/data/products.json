@@ -10,5 +10,9 @@
   {
     "name": "Sepatu",
     "price": 40000
+  },
+  {
+    "name": "Celana Bahan",
+    "price": 55000
   }
 ]

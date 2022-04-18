@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.9% </span>
+                <span class="strong">18.51% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/42</span>
+                <span class='fraction'>5/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.19% </span>
+                <span class="strong">19.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/41</span>
+                <span class='fraction'>5/26</span>
             </div>
         
             
@@ -241,41 +241,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,7 +338,7 @@ class Controller {
 &nbsp;
       const payload = <span class="cstat-no" title="statement not covered" >{</span>
         StaffId: staff.id,
-        email: staff.email
+        email: staff.email,
       };
 &nbsp;
       const token = <span class="cstat-no" title="statement not covered" >signToken(payload);</span>
@@ -349,44 +349,44 @@ class Controller {
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async profile(req, res, next) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { StaffId } = <span class="cstat-no" title="statement not covered" >req.staff;</span>
-      const staff = <span class="cstat-no" title="statement not covered" >await Staff.findOne({</span>
-        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-        where: {
-          id: StaffId,
-        },
-      });
-<span class="cstat-no" title="statement not covered" >      if (!staff) {</span>
-<span class="cstat-no" title="statement not covered" >        throw {</span>
-          name: "staffNotFound",
-        };
-      }
-<span class="cstat-no" title="statement not covered" >      res.status(200).json(staff);</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      next(error);</span>
-    }
-  }
+  // static async profile(req, res, next) {
+  //   try {
+  //     const { StaffId } = req.staff;
+  //     const staff = await Staff.findOne({
+  //       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+  //       where: {
+  //         id: StaffId,
+  //       },
+  //     });
+  //     if (!staff) {
+  //       throw {
+  //         name: "staffNotFound",
+  //       };
+  //     }
+  //     res.status(200).json(staff);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async deleteStore(req, res, next) {
-    const t = <span class="cstat-no" title="statement not covered" >await sequelize.transaction();</span>
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { StaffId } = <span class="cstat-no" title="statement not covered" >req.staff;</span>
-      const staff = <span class="cstat-no" title="statement not covered" >await Staff.destroy({</span>
-        where: {
-          id: StaffId,
-        },
-        transaction: t,
-      });
+  // static async deleteStore(req, res, next) {
+  //   const t = await sequelize.transaction();
+  //   try {
+  //     const { StaffId } = req.staff;
+  //     const staff = await Staff.destroy({
+  //       where: {
+  //         id: StaffId,
+  //       },
+  //       transaction: t,
+  //     });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      await t.commit();</span>
-<span class="cstat-no" title="statement not covered" >      res.status(200).json({ message: `Staff Deleted` });</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >      await t.rollback();</span>
-<span class="cstat-no" title="statement not covered" >      next(error);</span>
-    }
-  }
+  //     await t.commit();
+  //     res.status(200).json({ message: `Staff Deleted` });
+  //   } catch (error) {
+  //     await t.rollback();
+  //     next(error);
+  //   }
+  // }
 }
 &nbsp;
 module.exports = Controller;
@@ -397,7 +397,7 @@ module.exports = Controller;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun Apr 17 2022 21:37:49 GMT+0700 (Western Indonesia Time)
+                at Mon Apr 18 2022 03:26:17 GMT+0700 (Indochina Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

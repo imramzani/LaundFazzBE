@@ -1,8 +1,9 @@
-const { Transaction, Product } = require("../models");
+const { Transaction, Product, Customer } = require("../models");
 const {
   sequelize,
   Sequelize: { Op },
 } = require("../models");
+const axios = require("axios");
 
 class Controller {
   static async addTransaction(req, res, next) {
@@ -34,6 +35,7 @@ class Controller {
         attributes: { exclude: ["createdAt", "updatedAt"] },
         include: {
           model: Product,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
         },
         where: {
           StaffId,
@@ -54,6 +56,10 @@ class Controller {
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
           CustomerId,
+        },
+        include: {
+          model: Customer,
+          attributes: ["name"],
         },
       });
 
@@ -80,7 +86,33 @@ class Controller {
           name: "transactionNotFound",
         };
       }
-       res.status(200).json(transaction);
+
+      if (transaction.status === "pending") {
+        const { data } = await axios.post(
+          "https://api.xendit.co/v2/invoices",
+          {
+            external_id:
+              transaction.id.toString() +
+              "_" +
+              transaction.CustomerId.toString() +
+              "_" +
+              new Date(),
+            amount: transaction.totalPrice,
+            payer_email: "customer@domain.com",
+            description: "Invoice Demo #123",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Basic eG5kX2RldmVsb3BtZW50XzFGRlNzdUF2QXFCaDAwWnJrdWc3ZGJHczY2VllZdjliYmhMb3VESjdYVmR4UWFTNndlYkoyME5iOFppVFZ6Szo=",
+            },
+          }
+        );
+        res.status(200).json({ transaction, data });
+      } else {
+        res.status(200).json(transaction);
+      }
     } catch (error) {
       next(error);
     }

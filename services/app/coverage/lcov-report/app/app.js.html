@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">57.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/35</span>
+                <span class='fraction'>19/33</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">57.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/35</span>
+                <span class='fraction'>19/33</span>
             </div>
         
             
@@ -125,8 +125,7 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -177,81 +176,79 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="missing-if-branch" title="if path not taken" >I</span>if (process.env.NODE_ENV === "development") {
 <span class="cstat-no" title="statement not covered" >  require("dotenv").config();</span>
 }
 const express = require("express");
 const errorHandler = require("./middlewares/errorHandler");
 const app = express();
-const cors = require('cors')
-const routes = require('./routes')
+const cors = require("cors");
+const routes = require("./routes");
 // const UserRouter = require('./routes/userRouter')
 &nbsp;
-const http = require("http")
-const { Server } = require("socket.io")
-const PORT = 3002
+const http = require("http");
+const { Server } = require("socket.io");
+const PORT = 3002;
 &nbsp;
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 &nbsp;
-const server = http.createServer(app)
+const server = http.createServer(app);
 &nbsp;
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3001", //ubahjadi localhost utk react
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     preflightContinue: false,
-    optionsSuccessStatus: 204
-  }
-})
+    optionsSuccessStatus: 204,
+  },
+});
 &nbsp;
-let arrChat = []
+let arrChat = [];
 io.on("connection", <span class="fstat-no" title="function not covered" >(s</span>ocket) =&gt; {
-<span class="cstat-no" title="statement not covered" >  console.log("User Connected :", socket.id)</span>
+<span class="cstat-no" title="statement not covered" >  console.log("User Connected :", socket.id);</span>
 <span class="cstat-no" title="statement not covered" >  socket.on("join_room", <span class="fstat-no" title="function not covered" >(d</span>ata) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    socket.join(data)</span>
-<span class="cstat-no" title="statement not covered" >    console.log(`User IDL ${socket.id} joined room ${data}`)</span>
-  })
+<span class="cstat-no" title="statement not covered" >    socket.join(data);</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`User IDL ${socket.id} joined room ${data}`);</span>
+  });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  socket.on("disconnect", <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    arrChat = []</span>
-<span class="cstat-no" title="statement not covered" >    console.log("User Disconnected")</span>
-  })
+<span class="cstat-no" title="statement not covered" >    arrChat = [];</span>
+<span class="cstat-no" title="statement not covered" >    console.log("User Disconnected");</span>
+  });
 <span class="cstat-no" title="statement not covered" >  socket.on("chatFromClient", <span class="fstat-no" title="function not covered" >(p</span>ayload) =&gt; {</span>
     // console.log(req.Credentials)
-<span class="cstat-no" title="statement not covered" >    console.log(payload, "&lt;&lt;&lt;&lt;&lt;Test payload")</span>
-<span class="cstat-no" title="statement not covered" >    arrChat</span>
-<span class="cstat-no" title="statement not covered" >    arrChat.push(payload)</span>
-<span class="cstat-no" title="statement not covered" >    console.log(arrChat)</span>
-<span class="cstat-no" title="statement not covered" >    io.to(payload.room).emit("messageFromServer", arrChat)</span>
-  })
-})
+<span class="cstat-no" title="statement not covered" >    console.log(payload, "&lt;&lt;&lt;&lt;&lt;Test payload");</span>
+<span class="cstat-no" title="statement not covered" >    arrChat;</span>
+<span class="cstat-no" title="statement not covered" >    arrChat.push(payload);</span>
+<span class="cstat-no" title="statement not covered" >    console.log(arrChat);</span>
+<span class="cstat-no" title="statement not covered" >    io.to(payload.room).emit("messageFromServer", arrChat);</span>
+  });
+});
 &nbsp;
-server.listen(PORT, () =&gt; {
-  console.log(`server on port ${PORT}`)
-})
+// server.listen(PORT, () =&gt; {
+//   console.log(`server on port ${PORT}`)
+// })
 &nbsp;
 // app.use('/users', UserRouter)
 //app.use(errorHandler) bintang
-app.use("/", routes)
+app.use("/", routes);
 &nbsp;
-app.use(errorHandler) //mas steven
+app.use(errorHandler); //mas steven
 &nbsp;
-module.exports = app
-&nbsp;
+module.exports = app;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -259,7 +256,7 @@ module.exports = app
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun Apr 17 2022 21:37:49 GMT+0700 (Western Indonesia Time)
+                at Mon Apr 18 2022 03:26:17 GMT+0700 (Indochina Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

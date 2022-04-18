@@ -2,57 +2,57 @@
   {
     "CustomerId": 1,
     "StaffId": 1,
-    "isPaid": false,
-    "status": "pending",
-    "pickupDate": null,
+    "isPaid": true,
+    "status": "onProgress",
+    "pickupDate": "2022-04-17T17:44:34.439Z",
     "deliveryDate": null,
-    "longitude": null,
-    "latitude": null,
-    "totalPrice": null
+    "longitude": "-6.2358401",
+    "latitude": "106.7783222",
+    "totalPrice": 90000
   },
   {
     "CustomerId": 2,
     "StaffId": 1,
-    "isPaid": false,
-    "status": "pending",
-    "pickupDate": null,
-    "deliveryDate": null,
-    "longitude": null,
-    "latitude": null,
-    "totalPrice": null
+    "isPaid": true,
+    "status": "done",
+    "pickupDate": "2022-04-17T17:44:34.439Z",
+    "deliveryDate": "2022-04-16T17:44:34.439Z",
+    "longitude": "-6.2309099",
+    "latitude": "106.8014112",
+    "totalPrice": 235000
   },
   {
     "CustomerId": 1,
     "StaffId": 1,
-    "isPaid": false,
-    "status": "pending",
-    "pickupDate": null,
-    "deliveryDate": null,
-    "longitude": null,
-    "latitude": null,
-    "totalPrice": null
+    "isPaid": true,
+    "status": "done",
+    "pickupDate": "2022-04-16T17:44:34.439Z",
+    "deliveryDate": "2022-04-17T17:44:34.439Z",
+    "longitude": "-6.2358401",
+    "latitude": "106.7783222",
+    "totalPrice": 145000
   },
   {
     "CustomerId": 2,
     "StaffId": 1,
-    "isPaid": false,
-    "status": "pending",
-    "pickupDate": null,
-    "deliveryDate": null,
-    "longitude": null,
-    "latitude": null,
-    "totalPrice": null
+    "isPaid": true,
+    "status": "done",
+    "pickupDate": "2022-04-16T17:44:34.439Z",
+    "deliveryDate": "2022-04-17T17:44:34.439Z",
+    "longitude": "-6.2309099",
+    "latitude": "106.8014112",
+    "totalPrice": 170000
   },
   {
     "CustomerId": 1,
     "StaffId": 1,
-    "isPaid": false,
-    "status": "pending",
-    "pickupDate": null,
-    "deliveryDate": null,
-    "longitude": null,
-    "latitude": null,
-    "totalPrice": null
+    "isPaid": true,
+    "status": "onProgress",
+    "pickupDate": "2022-04-16T17:44:34.439Z",
+    "deliveryDate": "2022-04-17T17:44:34.439Z",
+    "longitude": "-6.2358401",
+    "latitude": "106.7783222",
+    "totalPrice": 220000
   },
   {
     "CustomerId": 2,
@@ -61,8 +61,8 @@
     "status": "pending",
     "pickupDate": null,
     "deliveryDate": null,
-    "longitude": null,
-    "latitude": null,
-    "totalPrice": null
+    "longitude": "-6.2309099",
+    "latitude": "106.8014112",
+    "totalPrice": 150000
   }
 ]

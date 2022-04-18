@@ -6,11 +6,81 @@
   {
     "TransactionId": 2,
     "ProductId": 2
-  },{
+  },
+  {
     "TransactionId": 3,
     "ProductId": 3
-  },{
+  },
+  {
     "TransactionId": 4,
     "ProductId": 1
+  },
+  {
+    "TransactionId": 2,
+    "ProductId": 3
+  },
+  {
+    "TransactionId": 2,
+    "ProductId": 3
+  },
+  {
+    "TransactionId": 2,
+    "ProductId": 4
+  },
+  {
+    "TransactionId": 2,
+    "ProductId": 1
+  },
+  {
+    "TransactionId": 1,
+    "ProductId": 3
+  },
+  {
+    "TransactionId": 3,
+    "ProductId": 1
+  },
+  {
+    "TransactionId": 3,
+    "ProductId": 4
+  },
+  {
+    "TransactionId": 4,
+    "ProductId": 2
+  },
+  {
+    "TransactionId": 4,
+    "ProductId": 2
+  },
+  {
+    "TransactionId": 5,
+    "ProductId": 3
+  },
+  {
+    "TransactionId": 5,
+    "ProductId": 3
+  },
+  {
+    "TransactionId": 5,
+    "ProductId": 3
+  },
+  {
+    "TransactionId": 5,
+    "ProductId": 1
+  },
+  {
+    "TransactionId": 5,
+    "ProductId": 1
+  },
+  {
+    "TransactionId": 6,
+    "ProductId": 4
+  },
+  {
+    "TransactionId": 6,
+    "ProductId": 4
+  },
+  {
+    "TransactionId": 6,
+    "ProductId": 3
   }
 ]

@@ -5,28 +5,30 @@ const request = require("supertest");
 const app = require("../app");
 const { User, Bookmark, Job, Company } = require("../models");
 const fs = require("fs");
+const { hash } = require("../helpers/bcrypt.js");
 
 const access_token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JJZCI6NDE2LCJlbWFpbCI6InRoZWJsYWNrc3dvcmRzbWFuOTVAZ21haWwuY29tIiwidXNlcm5hbWUiOiJzdGV2ZW4gYW5kcmUiLCJyb2xlIjoic3RhZmYiLCJpYXQiOjE2NDUyODEyODAsImV4cCI6MTY0NTI4NDg4MH0.0x65CjMY4I3gYknqRmzHKd4g0AHF-NNS4mYR6y5ectA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxLCJlbWFpbCI6ImFuZHJpemFsLmNzQGdtYWlsLmNvbSIsImlhdCI6MTY1MDIyMDk2NX0.3aNbVzTNVCDI1Oubicm6eqbbFuXLV6Aa83cps_g4t4w";
 
 let registerData = {
   email: "tested@gmail.com",
   password: "tested1",
   phoneNumber: "tested1",
-  name: "test"
+  name: "test",
 };
-// beforeAll(async () => {
-//   try {
-//     let data = JSON.parse(fs.readFileSync("./data/stores.json", "utf-8"));
-//     data.forEach((el) => {
-//       el.createdAt = new Date();
-//       el.updatedAt = new Date();
-//     });
-//     await queryInterface.bulkInsert("Stores", data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+beforeAll(async () => {
+  try {
+    let data = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"));
+    data.forEach((el) => {
+      el.password = hash(el.password);
+      el.createdAt = new Date();
+      el.updatedAt = new Date();
+    });
+    await queryInterface.bulkInsert("Customers", data);
+  } catch (error) {
+    console.log(error);
+  }
+});
 afterAll(async () => {
   await queryInterface.bulkDelete("Customers", null);
 });
@@ -34,112 +36,164 @@ afterAll(async () => {
 describe(`POST /customer/register`, () => {
   describe(`POST /customer/register sukses`, () => {
     it(`should return an object with status 201`, async () => {
-      const res = await request(app).post('/customers/register').send(registerData)
+      const res = await request(app)
+        .post("/customers/register")
+        .send(registerData);
       expect(res.status).toBe(201);
-      expect(res.body).toHaveProperty('id')
-      expect(res.body).toHaveProperty('id', expect.any(Number))
-      expect(res.body).toHaveProperty('email')
-      expect(res.body).toHaveProperty('email', expect.any(String))
-      expect(res.body).toHaveProperty('email', registerData.email)
-      expect(res.body).toHaveProperty('password')
-      expect(res.body).toHaveProperty('password', expect.any(String))
-      expect(res.body).toHaveProperty('phoneNumber')
-      expect(res.body).toHaveProperty('phoneNumber', expect.any(String))
-      expect(res.body).toHaveProperty('phoneNumber', registerData.phoneNumber)
-      // expect(res.body).toHaveProperty('address')
-      // expect(res.body).toHaveProperty('address', expect.any(String))
-      // expect(res.body).toHaveProperty('address', registerData.address)
-      expect(res.body).toHaveProperty('name')
-      expect(res.body).toHaveProperty('name', expect.any(String))
-      expect(res.body).toHaveProperty('name', registerData.name)
-    })
-  })
+      expect(res.body).toHaveProperty("id");
+      expect(res.body).toHaveProperty("id", expect.any(Number));
+      expect(res.body).toHaveProperty("email");
+      expect(res.body).toHaveProperty("email", expect.any(String));
+      expect(res.body).toHaveProperty("email", registerData.email);
+      expect(res.body).toHaveProperty("password");
+      expect(res.body).toHaveProperty("password", expect.any(String));
+      expect(res.body).toHaveProperty("phoneNumber");
+      expect(res.body).toHaveProperty("phoneNumber", expect.any(String));
+      expect(res.body).toHaveProperty("phoneNumber", registerData.phoneNumber);
+      expect(res.body).toHaveProperty("name");
+      expect(res.body).toHaveProperty("name", expect.any(String));
+      expect(res.body).toHaveProperty("name", registerData.name);
+    });
+  });
 
   describe(`POST /customer/register fail`, () => {
     it(`should be return an object with status 400`, async () => {
-      const data = { email: null, password: "12345", phoneNumber:"12345", name:"12345" }
-      const res = await request(app).post('/customers/register').send(data)
-      expect(res.status).toBe(400)
-      expect(res.body).toHaveProperty('Error', expect.arrayContaining([`Customer email cannot be null`]))
-    })
-
-  })
-  // describe(`POST /customer/register fail`, () => {
-  //   it(`should be return an object with status 400`, async () => {
-  //     const data = { email: '', password: "12345", phoneNumber:"12345", name:"12345", address:"12345" }
-  //     const res = await request(app).post('/customers/register').send(data)
-  //     console.log(res.body,'kkkkkkkkk')
-  //     expect(res.status).toBe(400)
-  //     expect(res.body).toHaveProperty('Error', expect.toContain([`Customer email cannot be null`]))
-  //   })
-  // })
+      const data = {
+        email: null,
+        password: "12345",
+        phoneNumber: "12345",
+        name: "12345",
+      };
+      const res = await request(app).post("/customers/register").send(data);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        "Error",
+        expect.arrayContaining([`Customer email cannot be null`])
+      );
+    });
+  });
 
   describe(`POST /customer/register fail`, () => {
     it(`should be return an object with status 400`, async () => {
-      const data = { email: 'email@yahoo.com', password: null, phoneNumber:"12345", name:"12345" }
-      const res = await request(app).post('/customers/register').send(data)
-      expect(res.status).toBe(400)
-      expect(res.body).toHaveProperty('Error', expect.arrayContaining([`Customer password cannot be null`]))
-    })
-  })
-
-  // describe(`POST /customer/register fail`, () => {
-  //   it(`should be return an object with status 400`, async () => {
-  //     const data = { email: 'email@yahoo.com', password: "", phoneNumber:"12345", name:"12345", address:"12345" }
-  //     const res = await request(app).post('/customers/register').send(data)
-  //     expect(res.status).toBe(400)
-  //     expect(res.body).toHaveProperty('Error', expect.arrayContaining([`Customer password cannot be empty", "Customer password length minimum 5 letters`]))
-  //   })
-  // })
-
-  describe(`POST /customer/register fail`, () => {
-    it(`should be return an object with status 400`, async () => {
-      const res = await request(app).post('/customers/register').send(registerData)
-      expect(res.status).toBe(400)
-      expect(res.body).toHaveProperty('Error', expect.arrayContaining([`Customer email must be unique`]))
-    })
-  })
+      const data = {
+        email: "email@yahoo.com",
+        password: null,
+        phoneNumber: "12345",
+        name: "12345",
+      };
+      const res = await request(app).post("/customers/register").send(data);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        "Error",
+        expect.arrayContaining([`Customer password cannot be null`])
+      );
+    });
+  });
 
   describe(`POST /customer/register fail`, () => {
     it(`should be return an object with status 400`, async () => {
-      const data = { email: 'wfefcasc', password: "12345", phoneNumber:"12345", name:"12345" }
-      const res = await request(app).post('/customers/register').send(data)
-      expect(res.status).toBe(400)
-      expect(res.body).toHaveProperty('Error', expect.arrayContaining([`Customer email must be email format`]))
-    })
-  })
-})
+      const res = await request(app)
+        .post("/customers/register")
+        .send(registerData);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        "Error",
+        expect.arrayContaining([`Customer email must be unique`])
+      );
+    });
+  });
+
+  describe(`POST /customer/register fail`, () => {
+    it(`should be return an object with status 400`, async () => {
+      const data = {
+        email: "wfefcasc",
+        password: "12345",
+        phoneNumber: "12345",
+        name: "12345",
+      };
+      const res = await request(app).post("/customers/register").send(data);
+      expect(res.status).toBe(400);
+      expect(res.body).toHaveProperty(
+        "Error",
+        expect.arrayContaining([`Customer email must be email format`])
+      );
+    });
+  });
+});
 
 describe(`POST /customer/login`, () => {
   describe(`POST /customer/login sukses`, () => {
-      it(`should return an object with status 200`, async () => {
-          const data = { email: "tested@gmail.com", password: "tested1" }
-          const res = await request(app).post('/customers/login').send(data)
-          expect(res.status).toBe(200);
-          expect(res.body).toHaveProperty('access_token')
-          expect(res.body).toHaveProperty('access_token', expect.any(String))
-      })
-  })
+    it(`should return an object with status 200`, async () => {
+      const data = { email: "tested@gmail.com", password: "tested1" };
+      const res = await request(app).post("/customers/login").send(data);
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("access_token");
+      expect(res.body).toHaveProperty("access_token", expect.any(String));
+    });
+  });
 
   describe(`POST /customer/login fail`, () => {
-      it(`should return an object with status 401`, async () => {
-          const data = { email: "admin@gmail.com", password: "qwertytre" }
-          const res = await request(app).post('/customers/login').send(data)
-          expect(res.status).toBe(401);
-          expect(res.body).toHaveProperty('Error')
-          expect(res.body).toHaveProperty('Error', expect.any(String))
-          expect(res.body).toHaveProperty('Error', `Wrong customer email or password`)
-      })
+    it(`should return an object with status 401`, async () => {
+      const data = { email: "admin@gmail.com", password: "qwertytre" };
+      const res = await request(app).post("/customers/login").send(data);
+      expect(res.status).toBe(401);
+      expect(res.body).toHaveProperty("Error");
+      expect(res.body).toHaveProperty("Error", expect.any(String));
+      expect(res.body).toHaveProperty(
+        "Error",
+        `Wrong customer email or password`
+      );
+    });
 
-      describe(`POST /customer/login fail`, () => {
-          it(`should return an object with status 401`, async () => {
-              const data = { email: "emailytrewq@gmail.com", password: "qwertytre" }
-              const res = await request(app).post('/customers/login').send(data)
-              expect(res.status).toBe(401);
-              expect(res.body).toHaveProperty('Error')
-              expect(res.body).toHaveProperty('Error', expect.any(String))
-              expect(res.body).toHaveProperty('Error', `Wrong customer email or password`)
-          })
-      })
-  })
-})
+    describe(`POST /customer/login fail`, () => {
+      it(`should return an object with status 401`, async () => {
+        const data = { email: "emailytrewq@gmail.com", password: "qwertytre" };
+        const res = await request(app).post("/customers/login").send(data);
+        expect(res.status).toBe(401);
+        expect(res.body).toHaveProperty("Error");
+        expect(res.body).toHaveProperty("Error", expect.any(String));
+        expect(res.body).toHaveProperty(
+          "Error",
+          `Wrong customer email or password`
+        );
+      });
+    });
+  });
+});
+
+describe(`GET /customers/`, () => {
+  describe(`GET /customers/ sukses`, () => {
+    it(`should return an object with status 200`, async () => {
+      const res = await request(app)
+        .get("/customers/")
+        .send()
+        .set("access_token", access_token);
+      // console.log(res.body, `ERROR GET`);
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("id");
+      expect(res.body).toHaveProperty("id", expect.any(Number));
+      expect(res.body).toHaveProperty("email");
+      expect(res.body).toHaveProperty("email", expect.any(String));
+      expect(res.body).toHaveProperty("name");
+      expect(res.body).toHaveProperty("name", expect.any(String));
+      expect(res.body).toHaveProperty("phoneNumber");
+      expect(res.body).toHaveProperty("phoneNumber", expect.any(String));
+    });
+  });
+
+  describe(`GET /customers/ fail`, () => {
+    it(`should return an object with status 401`, async () => {
+      const wrong_token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxMCwiZW1haWwiOiJhbmRyaXphbC5jc0BnbWFpbC5jb20iLCJpYXQiOjE2NTAyMjAyNTZ9.HG6HH3C-u2e7UpEHvY6YaCBG6Qkwu4FMBpsMKvuzau0";
+      const res = await request(app)
+        .get("/customers")
+        .send()
+        .set("access_token", wrong_token);
+      // console.log(res, `ERROR`);
+      expect(res.status).toBe(401);
+      expect(res.body).toHaveProperty("Error");
+      expect(res.body).toHaveProperty("Error", expect.any(String));
+      expect(res.body).toHaveProperty("Error", "Invalid token or customer");
+    });
+  });
+});

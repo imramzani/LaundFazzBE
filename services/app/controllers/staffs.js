@@ -55,7 +55,7 @@ class Controller {
 
       const payload = {
         StaffId: staff.id,
-        email: staff.email
+        email: staff.email,
       };
 
       const token = signToken(payload);
@@ -66,44 +66,44 @@ class Controller {
     }
   }
 
-  static async profile(req, res, next) {
-    try {
-      const { StaffId } = req.staff;
-      const staff = await Staff.findOne({
-        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-        where: {
-          id: StaffId,
-        },
-      });
-      if (!staff) {
-        throw {
-          name: "staffNotFound",
-        };
-      }
-      res.status(200).json(staff);
-    } catch (error) {
-      next(error);
-    }
-  }
+  // static async profile(req, res, next) {
+  //   try {
+  //     const { StaffId } = req.staff;
+  //     const staff = await Staff.findOne({
+  //       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+  //       where: {
+  //         id: StaffId,
+  //       },
+  //     });
+  //     if (!staff) {
+  //       throw {
+  //         name: "staffNotFound",
+  //       };
+  //     }
+  //     res.status(200).json(staff);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 
-  static async deleteStore(req, res, next) {
-    const t = await sequelize.transaction();
-    try {
-      const { StaffId } = req.staff;
-      const staff = await Staff.destroy({
-        where: {
-          id: StaffId,
-        },
-        transaction: t,
-      });
+  // static async deleteStore(req, res, next) {
+  //   const t = await sequelize.transaction();
+  //   try {
+  //     const { StaffId } = req.staff;
+  //     const staff = await Staff.destroy({
+  //       where: {
+  //         id: StaffId,
+  //       },
+  //       transaction: t,
+  //     });
 
-      await t.commit();
-      res.status(200).json({ message: `Staff Deleted` });
-    } catch (error) {
-      await t.rollback();
-      next(error);
-    }
-  }
+  //     await t.commit();
+  //     res.status(200).json({ message: `Staff Deleted` });
+  //   } catch (error) {
+  //     await t.rollback();
+  //     next(error);
+  //   }
+  // }
 }
 
 module.exports = Controller;

@@ -6,7 +6,10 @@
   "scripts": {
     "mon": "npx nodemon bin/www.js",
     "testdb": "npx sequelize-cli --env=test db:drop && npx sequelize-cli --env=test db:create && npx sequelize-cli --env=test db:migrate && npx sequelize-cli --env=test db:seed:all",
-    "test": "npx jest customer.test.js --detectOpenHandles --forceExit --runInBand"
+    "custTest": "npx jest customer.test.js --detectOpenHandles --forceExit --runInBand --coverage",
+    "staffTest": "npx jest staff.test.js --detectOpenHandles --forceExit --runInBand --coverage",
+    "transactionTest": "npx jest transaction.test.js --detectOpenHandles --forceExit --runInBand --coverage",
+    "test": "npx jest --detectOpenHandles --forceExit --runInBand --coverage"
   },
   "repository": {
     "type": "git",

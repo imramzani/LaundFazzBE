@@ -4,60 +4,59 @@ if (process.env.NODE_ENV === "development") {
 const express = require("express");
 const errorHandler = require("./middlewares/errorHandler");
 const app = express();
-const cors = require('cors')
-const routes = require('./routes')
+const cors = require("cors");
+const routes = require("./routes");
 // const UserRouter = require('./routes/userRouter')
 
-const http = require("http")
-const { Server } = require("socket.io")
-const PORT = 3002
+const http = require("http");
+const { Server } = require("socket.io");
+const PORT = 3002;
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3001", //ubahjadi localhost utk react
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     preflightContinue: false,
-    optionsSuccessStatus: 204
-  }
-})
+    optionsSuccessStatus: 204,
+  },
+});
 
-let arrChat = []
+let arrChat = [];
 io.on("connection", (socket) => {
-  console.log("User Connected :", socket.id)
+  console.log("User Connected :", socket.id);
   socket.on("join_room", (data) => {
-    socket.join(data)
-    console.log(`User IDL ${socket.id} joined room ${data}`)
-  })
+    socket.join(data);
+    console.log(`User IDL ${socket.id} joined room ${data}`);
+  });
 
   socket.on("disconnect", () => {
-    arrChat = []
-    console.log("User Disconnected")
-  })
+    arrChat = [];
+    console.log("User Disconnected");
+  });
   socket.on("chatFromClient", (payload) => {
     // console.log(req.Credentials)
-    console.log(payload, "<<<<<Test payload")
-    arrChat
-    arrChat.push(payload)
-    console.log(arrChat)
-    io.to(payload.room).emit("messageFromServer", arrChat)
-  })
-})
+    console.log(payload, "<<<<<Test payload");
+    arrChat;
+    arrChat.push(payload);
+    console.log(arrChat);
+    io.to(payload.room).emit("messageFromServer", arrChat);
+  });
+});
 
-server.listen(PORT, () => {
-  console.log(`server on port ${PORT}`)
-})
+// server.listen(PORT, () => {
+//   console.log(`server on port ${PORT}`)
+// })
 
 // app.use('/users', UserRouter)
 //app.use(errorHandler) bintang
-app.use("/", routes)
+app.use("/", routes);
 
-app.use(errorHandler) //mas steven
+app.use(errorHandler); //mas steven
 
-module.exports = app
-
+module.exports = app;
