@@ -93,10 +93,15 @@ const typeDefs = gql`
     getTransactionProductById(id: ID!): TransactionProduct
     loginUser(email: ID, password: String!): LogInResponse
     loginStaff(email: ID, password: String!): LogInResponse
+    getStaff(id: ID!): Staff
   }
 
   type Mutation {
-    userAddTransaction(StaffId: ID!, productArrays:[Int], totalPrice: Int): Transaction
+    userAddTransaction(
+      StaffId: ID!
+      productArrays: [Int]
+      totalPrice: Int
+    ): Transaction
     putTransaction(
       pickupDate: String
       deliveryDate: String
@@ -107,6 +112,7 @@ const typeDefs = gql`
       totalPrice: Int
       id: ID!
     ): Transaction
+    staffPatchPosition(longitude: String, latitude: String): Staff
   }
 `;
 const resolvers = {
@@ -341,6 +347,18 @@ const resolvers = {
         return err;
       }
     },
+    getStaff: async (_, args) => {
+      try {
+        const staff = await axios.get(
+          `http://localhost:3000/staffs/${args.id}`
+        );
+        if (staff) {
+          return staff.data;
+        }
+      } catch (err) {
+        return err;
+      }
+    },
   },
 
   Mutation: {
@@ -353,7 +371,7 @@ const resolvers = {
           {
             StaffId,
             productArrays,
-            totalPrice
+            totalPrice,
           },
           {
             headers: {
@@ -424,6 +442,28 @@ const resolvers = {
         return err;
       }
     },
+  },
+  staffPatchPosition: async (_, args) => {
+    const { longitude, latitude } = args;
+    try {
+      const staff = await axios.patch(
+        `http://localhost:3000/staffs`,
+        {
+          longitude,
+          latitude,
+        },
+        {
+          headers: {
+            access_token: token_staff,
+          },
+        }
+      );
+      if (staff) {
+        return staff.data;
+      }
+    } catch (err) {
+      return err;
+    }
   },
 };
 
