@@ -84,12 +84,9 @@ const typeDefs = gql`
   type Query {
     getCustomerName: CustomerName
     getProducts: [Product]
-    getProductById(id: ID!): Product
     getStaffTransactions: [Transaction]
     getStaffTransactionById(id: ID!): Transaction
     getUserTransactions: [Transaction]
-    getUserTransactionById(id: ID!): Transaction
-    getTransactionProducts: [TransactionProduct]
     getTransactionProductById(id: ID!): TransactionProduct
     loginUser(email: ID, password: String!): LogInResponse
     loginStaff(email: ID, password: String!): LogInResponse
@@ -101,17 +98,10 @@ const typeDefs = gql`
       StaffId: ID!
       productArrays: [Int]
       totalPrice: Int
-    ): Transaction
-    putTransaction(
-      pickupDate: String
-      deliveryDate: String
-      status: String
-      isPaid: Boolean
       longitude: String
       latitude: String
-      totalPrice: Int
-      id: ID!
     ): Transaction
+    putTransaction(id: ID!): Transaction
     staffPatchPosition(longitude: String, latitude: String): Staff
   }
 `;
@@ -363,7 +353,7 @@ const resolvers = {
 
   Mutation: {
     userAddTransaction: async (_, args) => {
-      const { StaffId, productArrays, totalPrice } = args;
+      const { StaffId, productArrays, totalPrice, longitude, latitude } = args;
 
       try {
         const newTransaction = await axios.post(
@@ -372,6 +362,8 @@ const resolvers = {
             StaffId,
             productArrays,
             totalPrice,
+            longitude,
+            latitude,
           },
           {
             headers: {
@@ -388,43 +380,7 @@ const resolvers = {
       }
     },
     putTransaction: async (_, args) => {
-      const {
-        pickupDate,
-        deliveryDate,
-        status,
-        isPaid,
-        longitude,
-        latitude,
-        totalPrice,
-      } = args;
-      console.log(args);
-
       try {
-        let temp = {};
-
-        if (pickupDate) {
-          temp.pickupDate = pickupDate;
-        }
-        if (deliveryDate) {
-          temp.deliveryDate = deliveryDate;
-        }
-        if (status) {
-          temp.status = status;
-        }
-        if (isPaid) {
-          // console.log(`MASUK`);
-          temp.isPaid = isPaid;
-        }
-        if (longitude) {
-          temp.longitude = longitude;
-        }
-        if (latitude) {
-          temp.latitude = latitude;
-        }
-        if (totalPrice) {
-          temp.totalPrice = latitude;
-        }
-        console.log(temp, isPaid);
         const newTransaction = await axios.put(
           `http://localhost:3000/staffs/transactions/${args.id}`,
           temp,

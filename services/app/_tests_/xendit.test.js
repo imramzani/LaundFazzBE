@@ -62,7 +62,7 @@ describe(`GET /customers/trancsaction/trancsactionId success`, () => {
             const res = await request(app)
                 .get("/customers/transactions/4")
                 .set('access_token', token_user);
-            console.log(res.body, 'kontol')
+            // console.log(res.body, 'kontol')
             expect(res.status).toBe(200);
             // expect(res.body).toHaveProperty("trancsaction");
             // expect(res.body).toHaveProperty("data");
@@ -86,7 +86,7 @@ describe(`GET /customers/trancsaction/trancsactionId success`, () => {
             const res = await request(app)
                 .get("/customers/transactions/1")
                 .set('access_token', '12345');
-            console.log(res.body, 'kontol')
+            // console.log(res.body, 'kontol')
 
             expect(res.status).toBe(401);
             // expect(res.body).toHaveProperty("msg");
@@ -96,7 +96,7 @@ describe(`GET /customers/trancsaction/trancsactionId success`, () => {
             const res = await request(app)
                 .get("/customers/transactions/100")
                 .set('access_token', token_user);
-            console.log(res.body, 'kontol')
+            // console.log(res.body, 'kontol')
 
             expect(res.status).toBe(404);
             // expect(res.body).toHaveProperty("msg");

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const authentication = require("../middlewares/customerAuthc");
-// const authorization = require("../middlewares/customerAuthz");
 const Controller = require("../controllers/customers");
 const transactions = require("./customerTransactions");
 
@@ -10,8 +9,7 @@ router.post("/login", Controller.login);
 
 router.use(authentication);
 
-router.get("/", Controller.profile);
-// router.delete("/", authorization, Controller.deleteUser);
+router.get("/", Controller.profile);;
 router.use("/transactions", transactions);
 
 module.exports = router;
