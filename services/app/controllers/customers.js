@@ -115,11 +115,11 @@ class Controller {
           id: CustomerId,
         },
       });
-      if (!customer) {
-        throw {
-          name: "customerNotFound",
-        };
-      }
+      // if (!customer) {
+      //   throw {
+      //     name: "customerNotFound",
+      //   };
+      // }
       res.status(200).json(customer);
     } catch (error) {
       next(error);

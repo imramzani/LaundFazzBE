@@ -29,6 +29,52 @@ const dataXendit = {
     "payment_destination": "888888888888"
 }
 
+const wrongdataXendit1 = {
+    "id": "579c8d61f23fa4ca35e52da4",
+    "external_id": "10_1",
+    "user_id": "5781d19b2e2385880609791c",
+    "is_high": true,
+    "payment_method": "BANK_TRANSFER",
+    "status": "PAID",
+    "merchant_name": "Xendit",
+    "amount": 50000,
+    "paid_amount": 50000,
+    "bank_code": "PERMATA",
+    "paid_at": "2016-10-12T08:15:03.404Z",
+    "payer_email": "wildan@xendit.co",
+    "description": "This is a description",
+    "adjusted_received_amount": 47500,
+    "fees_paid_amount": 0,
+    "updated": "2016-10-10T08:15:03.404Z",
+    "created": "2016-10-10T08:15:03.404Z",
+    "currency": "IDR",
+    "payment_channel": "PERMATA",
+    "payment_destination": "888888888888"
+}
+
+const wrongdataXendit2 = {
+    "id": "579c8d61f23fa4ca35e52da4",
+    "external_id": "1_10",
+    "user_id": "5781d19b2e2385880609791c",
+    "is_high": true,
+    "payment_method": "BANK_TRANSFER",
+    "status": "PAID",
+    "merchant_name": "Xendit",
+    "amount": 50000,
+    "paid_amount": 50000,
+    "bank_code": "PERMATA",
+    "paid_at": "2016-10-12T08:15:03.404Z",
+    "payer_email": "wildan@xendit.co",
+    "description": "This is a description",
+    "adjusted_received_amount": 47500,
+    "fees_paid_amount": 0,
+    "updated": "2016-10-10T08:15:03.404Z",
+    "created": "2016-10-10T08:15:03.404Z",
+    "currency": "IDR",
+    "payment_channel": "PERMATA",
+    "payment_destination": "888888888888"
+}
+
 // beforeAll(async () => {
 //     try {
 //       let data = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"));
@@ -126,6 +172,26 @@ describe(`POST /xendit`, () => {
             expect(res.status).toBe(200);
             expect(res.body).toHaveProperty("msg");
             expect(res.body).toHaveProperty("msg", expect.any(String));
+        });
+    });
+
+    describe(`POST /xendit fail`, () => {
+        it(`should return an object with status 404`, async () => {
+            const res = await request(app)
+                .post("/xendit")
+                .send(wrongdataXendit1);
+            expect(res.status).toBe(404);
+            expect(res.body).toHaveProperty("Error");
+            expect(res.body).toHaveProperty("Error", expect.any(String));
+        });
+
+        it(`should return an object with status 500`, async () => {
+            const res = await request(app)
+                .post("/xendit")
+                .send(wrongdataXendit2);
+            expect(res.status).toBe(500);
+            expect(res.body).toHaveProperty("Error");
+            expect(res.body).toHaveProperty("Error", expect.any(String));
         });
     });
 })

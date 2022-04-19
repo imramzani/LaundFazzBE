@@ -50,8 +50,6 @@ class Controller {
         if (err) {
           console.log(err, "vvvv");
           throw { name: "nodemailer error" };
-        } else {
-          // console.log("Email Sent:" + info.response);
         }
       });
 
