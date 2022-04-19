@@ -183,7 +183,7 @@ class Controller {
           to: `${userToEmail.email}`,
           subject: "Laundry Fazz",
           text: `Laundry Fazz done`,
-          template: "email",
+          template: "done",
           context: {
             TransactionId:`${newTransaction.id}`,
             status:`${newTransaction.status}`
