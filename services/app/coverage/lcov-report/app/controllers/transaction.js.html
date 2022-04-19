@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.69% </span>
+                <span class="strong">72.3% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>57/65</span>
+                <span class='fraction'>47/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>4/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.69% </span>
+                <span class="strong">72.3% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/65</span>
+                <span class='fraction'>47/65</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -375,10 +375,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -388,12 +388,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -417,11 +417,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -585,11 +585,11 @@ class Controller {
     }
   }
 &nbsp;
-  static async getTransactionById(req, res, next) {
-    try {
-      const { transactionId } = req.params;
-      console.log(req.params, "kontol2");
-      const transaction = await Transaction.findOne({
+<span class="fstat-no" title="function not covered" >  st</span>atic async getTransactionById(req, res, next) {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const { transactionId } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+<span class="cstat-no" title="statement not covered" >      console.log(req.params, "kontol2");</span>
+      const transaction = <span class="cstat-no" title="statement not covered" >await Transaction.findOne({</span>
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
           id: transactionId,
@@ -599,12 +599,12 @@ class Controller {
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
       });
-      if (!transaction) {
-        throw {
+<span class="cstat-no" title="statement not covered" >      if (!transaction) {</span>
+<span class="cstat-no" title="statement not covered" >        throw {</span>
           name: "transactionNotFound",
         };
       }
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (transaction.status === "pending") {
+<span class="cstat-no" title="statement not covered" >      if (transaction.status === "pending") {</span>
         const { data } = <span class="cstat-no" title="statement not covered" >await axios.post(</span>
           "https://api.xendit.co/v2/invoices",
           {
@@ -628,11 +628,11 @@ class Controller {
         );
 <span class="cstat-no" title="statement not covered" >        res.status(200).json({ transaction, data });</span>
       } else {
-        console.log(`MASUK ELSE`);
-        res.status(200).json({ transaction, data: null });
+<span class="cstat-no" title="statement not covered" >        console.log(`MASUK ELSE`);</span>
+<span class="cstat-no" title="statement not covered" >        res.status(200).json({ transaction, data: null });</span>
       }
     } catch (error) {
-      next(error);
+<span class="cstat-no" title="statement not covered" >      next(error);</span>
     }
   }
 &nbsp;
@@ -703,7 +703,7 @@ module.exports = Controller;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 19 2022 20:53:10 GMT+0700 (Western Indonesia Time)
+                at Tue Apr 19 2022 21:24:49 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

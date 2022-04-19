@@ -49,9 +49,9 @@ io.on("connection", (socket) => {
   });
 });
 
-// server.listen(PORT, () => {
-//   console.log(`server on port ${PORT}`)
-// })
+server.listen(PORT, () => {
+  console.log(`server on port ${PORT}`)
+})
 
 // app.use('/users', UserRouter)
 //app.use(errorHandler) bintang
@@ -59,4 +59,4 @@ app.use("/", routes);
 
 app.use(errorHandler); //mas steven
 
-module.exports = {app, server, PORT};
+module.exports = app;
