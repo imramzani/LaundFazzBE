@@ -68,7 +68,6 @@ const typeDefs = gql`
     name: String
     price: Int
   }
-  
 
   type TransactionProduct {
     id: ID
@@ -132,10 +131,10 @@ const typeDefs = gql`
 
   type Mutation {
     userAddTransaction(
-      StaffId: ID!,
-      productArrays: [Int],
-      totalPrice: Int,
-      longitude: String,
+      StaffId: ID!
+      productArrays: [Int]
+      totalPrice: Int
+      longitude: String
       latitude: String
     ): Transaction
     putTransaction(id: ID!): Transaction
@@ -356,8 +355,10 @@ const resolvers = {
     },
     putTransaction: async (_, args) => {
       try {
+        console.log(`MASUK IF`, args);
         const newTransaction = await axios.put(
           `http://localhost:3000/staffs/transactions/${args.id}`,
+          {},
           {
             headers: {
               access_token: token_staff,
@@ -375,7 +376,6 @@ const resolvers = {
     staffPatchPosition: async (_, args) => {
       const { longitude, latitude } = args;
       try {
-        
         const staff = await axios.patch(
           `http://localhost:3000/staffs`,
           {
