@@ -215,8 +215,8 @@ class Controller {
           text: `Laundry Fazz done`,
           template: "done",
           context: {
-            TransactionId:`${newTransaction.id}`,
-            status:`${newTransaction.status}`
+            TransactionId:`${transactionId}`,
+            status:`Done`
             // image: ''
           },
         };
