@@ -12,7 +12,7 @@ let authentication = async (req, res, next) => {
         id: payload.CustomerId,
       },
     });
-    console.log(`MASUK AUTHC`, payload, customer,'jembut kontol anjing');
+    // console.log(`MASUK AUTHC`, payload, customer);
     if (!customer) {
       throw {
         name: `customerAuthc Failed`,

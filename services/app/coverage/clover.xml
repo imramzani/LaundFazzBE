@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1650333820500" clover="3.2.0">
-  <project timestamp="1650333820500" name="All files">
-    <metrics statements="361" coveredstatements="332" conditionals="57" coveredconditionals="48" methods="42" coveredmethods="38" elements="460" coveredelements="418" complexity="0" loc="361" ncloc="361" packages="6" files="25" classes="25"/>
+<coverage generated="1650360628320" clover="3.2.0">
+  <project timestamp="1650360628320" name="All files">
+    <metrics statements="373" coveredstatements="333" conditionals="61" coveredconditionals="48" methods="43" coveredmethods="38" elements="477" coveredelements="419" complexity="0" loc="373" ncloc="373" packages="6" files="25" classes="25"/>
     <package name="app">
       <metrics statements="33" coveredstatements="19" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="0"/>
       <file name="app.js" path="S:\HAckti8\PROJECT\FP\TESTING BE\LaundFazzBE\services\app\app.js">
@@ -42,7 +42,7 @@
       </file>
     </package>
     <package name="app.controllers">
-      <metrics statements="139" coveredstatements="129" conditionals="26" coveredconditionals="23" methods="14" coveredmethods="14"/>
+      <metrics statements="152" coveredstatements="131" conditionals="30" coveredconditionals="23" methods="15" coveredmethods="14"/>
       <file name="customers.js" path="S:\HAckti8\PROJECT\FP\TESTING BE\LaundFazzBE\services\app\controllers\customers.js">
         <metrics statements="35" coveredstatements="32" conditionals="10" coveredconditionals="8" methods="3" coveredmethods="3"/>
         <line num="1" count="5" type="stmt"/>
@@ -165,13 +165,13 @@
         <line num="96" count="0" type="stmt"/>
         <line num="101" count="3" type="stmt"/>
         <line num="102" count="3" type="stmt"/>
-        <line num="103" count="3" type="stmt"/>
         <line num="104" count="3" type="stmt"/>
         <line num="114" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="115" count="1" type="stmt"/>
-        <line num="120" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="121" count="0" type="stmt"/>
-        <line num="142" count="0" type="stmt"/>
+        <line num="119" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="120" count="0" type="stmt"/>
+        <line num="141" count="0" type="stmt"/>
+        <line num="143" count="2" type="stmt"/>
         <line num="144" count="2" type="stmt"/>
         <line num="147" count="1" type="stmt"/>
         <line num="152" count="2" type="stmt"/>
@@ -188,14 +188,27 @@
         <line num="182" count="5" type="stmt"/>
       </file>
       <file name="xendit.js" path="S:\HAckti8\PROJECT\FP\TESTING BE\LaundFazzBE\services\app\controllers\xendit.js">
-        <metrics statements="7" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <metrics statements="20" coveredstatements="8" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="5" type="stmt"/>
         <line num="2" count="5" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="56" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
         <line num="58" count="0" type="stmt"/>
-        <line num="63" count="5" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="65" count="5" type="stmt"/>
       </file>
     </package>
     <package name="app.helpers">
@@ -226,29 +239,28 @@
       </file>
     </package>
     <package name="app.middlewares">
-      <metrics statements="65" coveredstatements="61" conditionals="18" coveredconditionals="16" methods="5" coveredmethods="5"/>
+      <metrics statements="64" coveredstatements="60" conditionals="18" coveredconditionals="16" methods="5" coveredmethods="5"/>
       <file name="customerAuthc.js" path="S:\HAckti8\PROJECT\FP\TESTING BE\LaundFazzBE\services\app\middlewares\customerAuthc.js">
-        <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="5" type="stmt"/>
         <line num="2" count="5" type="stmt"/>
         <line num="4" count="5" type="stmt"/>
         <line num="5" count="11" type="stmt"/>
         <line num="6" count="11" type="stmt"/>
-        <line num="7" count="11" type="stmt"/>
-        <line num="8" count="10" type="stmt"/>
-        <line num="13" count="10" type="stmt"/>
-        <line num="14" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="20" count="8" type="stmt"/>
-        <line num="26" count="8" type="stmt"/>
-        <line num="28" count="3" type="stmt"/>
-        <line num="32" count="5" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="10" count="10" type="stmt"/>
+        <line num="16" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="22" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="34" count="5" type="stmt"/>
       </file>
       <file name="errorHandler.js" path="S:\HAckti8\PROJECT\FP\TESTING BE\LaundFazzBE\services\app\middlewares\errorHandler.js">
         <metrics statements="38" coveredstatements="34" conditionals="14" coveredconditionals="12" methods="3" coveredmethods="3"/>
-        <line num="2" count="24" type="stmt"/>
-        <line num="4" count="24" type="stmt"/>
-        <line num="5" count="24" type="cond" truecount="12" falsecount="2"/>
+        <line num="2" count="25" type="stmt"/>
+        <line num="4" count="25" type="stmt"/>
+        <line num="5" count="25" type="cond" truecount="12" falsecount="2"/>
         <line num="7" count="6" type="stmt"/>
         <line num="8" count="6" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
@@ -281,8 +293,8 @@
         <line num="52" count="3" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
         <line num="55" count="1" type="stmt"/>
-        <line num="57" count="1" type="stmt"/>
-        <line num="58" count="1" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
         <line num="62" count="5" type="stmt"/>
       </file>
       <file name="staffAuthc.js" path="S:\HAckti8\PROJECT\FP\TESTING BE\LaundFazzBE\services\app\middlewares\staffAuthc.js">

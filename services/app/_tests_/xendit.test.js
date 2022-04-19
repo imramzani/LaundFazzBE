@@ -73,7 +73,7 @@ describe(`GET /customers/trancsaction/trancsactionId success`, () => {
             const res = await request(app)
                 .get("/customers/transactions/1")
                 .set('access_token', token_user);
-            console.log(res.body, 'kontol')
+            // console.log(res.body, 'kontol')
 
             expect(res.status).toBe(200);
             // expect(res.body).toHaveProperty("msg");

@@ -81,14 +81,16 @@ class Controller {
     try {
       const { CustomerId } = req.customer;
       const transactions = await Transaction.findAll({
-        attributes: { exclude: ["createdAt", "updatedAt"] },
+        attributes: { exclude: ["updatedAt"] },
         where: {
           CustomerId,
         },
-        include: {
+        include: [{
           model: Customer,
           attributes: ["name"],
-        },
+        }, {
+          model: Product,
+        }],
       });
 
       res.status(200).json(transactions);
@@ -100,7 +102,7 @@ class Controller {
   static async getTransactionById(req, res, next) {
     try {
       const { transactionId } = req.params;
-      console.log(req.params, "kontol2");
+      // console.log(req.params, "kontol2");
       const transaction = await Transaction.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
