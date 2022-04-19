@@ -9,6 +9,7 @@ const {
   Sequelize: { Op },
 } = require("../models");
 const axios = require("axios");
+const {transporter} = require('../helpers/nodemailer')
 
 class Controller {
   static async addTransaction(req, res, next) {
@@ -158,7 +159,7 @@ class Controller {
       if (!transaction) {
         throw { name: "transactionNotFound" };
       }
-
+      const userToEmail = await Customer.findByPk(transaction.CustomerId)
       let newTransaction = await Transaction.update(
         { status: "done" },
         {
@@ -169,7 +170,35 @@ class Controller {
           transaction: t,
         }
       );
-
+      let mailOptions = {
+          // html: 'Embedded image: <img src="cid:xendit"/>',
+          attachments: [
+            {
+              filename: "logo.png",
+              path: "./views/logo.png",
+              cid: "logo", //same cid value as in the html img src
+            },
+          ],
+          from: "testinghaloprof@gmail.com",
+          to: `${userToEmail.email}`,
+          subject: "Laundry Fazz",
+          text: `Laundry Fazz done`,
+          template: "email",
+          context: {
+            TransactionId:`${newTransaction.id}`,
+            status:`${newTransaction.status}`
+            // image: ''
+          },
+        };
+  
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err, "vvvv");
+            throw { name: "nodemailer error" };
+          } else {
+            console.log("Email Sent:" + info.response);
+          }
+        });
       await t.commit();
       res.status(200).json(newTransaction[1][0]);
     } catch (error) {

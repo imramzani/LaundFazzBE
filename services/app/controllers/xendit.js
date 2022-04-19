@@ -41,7 +41,7 @@ class Controller {
         text: `Telah register di Laundry Fazz.`,
         template: "email",
         context: {
-          nama: "test",
+          nama: `${customerById.name}`,
           // image: ''
         },
       };
