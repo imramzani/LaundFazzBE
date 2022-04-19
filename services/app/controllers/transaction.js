@@ -196,7 +196,7 @@ class Controller {
             console.log(err, "vvvv");
             throw { name: "nodemailer error" };
           } else {
-            console.log("Email Sent:" + info.response);
+            // console.log("Email Sent:" + info.response);
           }
         });
       await t.commit();
