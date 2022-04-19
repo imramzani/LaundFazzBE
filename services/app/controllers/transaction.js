@@ -116,7 +116,6 @@ class Controller {
           name: "transactionNotFound",
         };
       }
-
       if (transaction.status === "pending") {
         const { data } = await axios.post(
           "https://api.xendit.co/v2/invoices",
@@ -141,7 +140,8 @@ class Controller {
         );
         res.status(200).json({ transaction, data });
       } else {
-        res.status(200).json(transaction);
+        console.log(`MASUK ELSE`);
+        res.status(200).json({ transaction, data: null });
       }
     } catch (error) {
       next(error);
