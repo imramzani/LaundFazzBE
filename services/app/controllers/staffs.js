@@ -66,25 +66,25 @@ class Controller {
     }
   }
 
-  // static async profile(req, res, next) {
-  //   try {
-  //     const { staffId } = req.params;
-  //     const staff = await Staff.findOne({
-  //       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-  //       where: {
-  //         id: staffId,
-  //       },
-  //     });
-  //     if (!staff) {
-  //       throw {
-  //         name: "staffNotFound",
-  //       };
-  //     }
-  //     res.status(200).json(staff);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  static async profile(req, res, next) {
+    try {
+      const { staffId } = req.params;
+      const staff = await Staff.findOne({
+        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+        where: {
+          id: staffId,
+        },
+      });
+      if (!staff) {
+        throw {
+          name: "staffNotFound",
+        };
+      }
+      res.status(200).json(staff);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async patchStaff(req, res, next) {
     try {

@@ -209,6 +209,17 @@ describe(`PATCH /staffs`, () => {
   });
 });
 
+describe(`GET /staffs`, () => {
+  describe(`GET /staffs sukses`, () => {
+    it(`should return an object with status 200`, async () => {
+      const res = await request(app).get("/staffs/1")
+      expect(res.status).toBe(200);
+      // expect(res.body).toHaveProperty("access_token");
+      // expect(res.body).toHaveProperty("access_token", expect.any(String));
+    });
+  });
+})
+
 // describe(`DELETE /staffs`, () => {
 //   describe(`DELETE /staffs sukses`, () => {
 //     it(`should return an object with status 200`, async () => {
