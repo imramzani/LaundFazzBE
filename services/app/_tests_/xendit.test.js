@@ -8,7 +8,7 @@ const token_user =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxLCJlbWFpbCI6ImFuZHJpemFsLmNzQGdtYWlsLmNvbSIsImlhdCI6MTY1MDIyMDk2NX0.3aNbVzTNVCDI1Oubicm6eqbbFuXLV6Aa83cps_g4t4w"
 const dataXendit = {
     "id": "579c8d61f23fa4ca35e52da4",
-    "external_id": "invoice_123124123",
+    "external_id": "1_1",
     "user_id": "5781d19b2e2385880609791c",
     "is_high": true,
     "payment_method": "BANK_TRANSFER",
