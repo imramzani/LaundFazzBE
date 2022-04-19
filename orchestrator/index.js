@@ -87,7 +87,7 @@ const typeDefs = gql`
     getStaffTransactions: [Transaction]
     getStaffTransactionById(id: ID!): Transaction
     getUserTransactions: [Transaction]
-    getTransactionProductById(id: ID!): TransactionProduct
+    getUserTransactionById(id: ID!): Transaction
     loginUser(email: ID, password: String!): LogInResponse
     loginStaff(email: ID, password: String!): LogInResponse
     getStaff(id: ID!): Staff
@@ -128,23 +128,6 @@ const resolvers = {
             await redis.set("products", JSON.stringify(products.data));
             return products.data;
           }
-        }
-      } catch (err) {
-        return err;
-      }
-    },
-    getProductById: async (_, args) => {
-      try {
-        const product = await axios.get(
-          `http://localhost:3000/products/${args.id}`,
-          {
-            headers: {
-              access_token: token_staff,
-            },
-          }
-        );
-        if (product) {
-          return product.data;
         }
       } catch (err) {
         return err;
@@ -243,53 +226,6 @@ const resolvers = {
         );
         if (transactions) {
           return transactions.data;
-        }
-      } catch (err) {
-        return err;
-      }
-    },
-
-    //! TransactionProducts
-    getTransactionProducts: async () => {
-      try {
-        // await redis.del("transactionProducts");
-        const TPCache = await redis.get("transactionProducts");
-
-        if (TPCache) {
-          const TP = JSON.parse(TPCache);
-          console.log(TP, "Request Cache");
-
-          return TP;
-        } else {
-          const TP = await axios.get(
-            `http://localhost:3000/transactionProducts`,
-            {
-              headers: {
-                access_token: token_staff,
-              },
-            }
-          );
-          if (TP) {
-            await redis.set("transactionProducts", JSON.stringify(TP.data));
-            return TP.data;
-          }
-        }
-      } catch (err) {
-        return err;
-      }
-    },
-    getTransactionProductById: async (_, args) => {
-      try {
-        const TP = await axios.get(
-          `http://localhost:3000/transactionProducts/${args.id}`,
-          {
-            headers: {
-              access_token: token_staff,
-            },
-          }
-        );
-        if (TP) {
-          return TP.data;
         }
       } catch (err) {
         return err;
@@ -398,28 +334,28 @@ const resolvers = {
         return err;
       }
     },
-  },
-  staffPatchPosition: async (_, args) => {
-    const { longitude, latitude } = args;
-    try {
-      const staff = await axios.patch(
-        `http://localhost:3000/staffs`,
-        {
-          longitude,
-          latitude,
-        },
-        {
-          headers: {
-            access_token: token_staff,
+    staffPatchPosition: async (_, args) => {
+      const { longitude, latitude } = args;
+      try {
+        const staff = await axios.patch(
+          `http://localhost:3000/staffs`,
+          {
+            longitude,
+            latitude,
           },
+          {
+            headers: {
+              access_token: token_staff,
+            },
+          }
+        );
+        if (staff) {
+          return staff.data;
         }
-      );
-      if (staff) {
-        return staff.data;
+      } catch (err) {
+        return err;
       }
-    } catch (err) {
-      return err;
-    }
+    },
   },
 };
 
