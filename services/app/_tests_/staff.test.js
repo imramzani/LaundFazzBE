@@ -176,6 +176,39 @@ describe(`POST /staffs/login`, () => {
   });
 });
 
+describe(`PATCH /staffs`, () => {
+  describe(`PATCH /staffs sukses`, () => {
+    it(`should return object with status 200`, async () => {
+      const data = {
+        longitude: "123456",
+        latitude: "654321",
+      };
+      const res = await request(app)
+        .patch("/staffs")
+        .send(data)
+        .set("access_token", access_token);
+      expect(res.status).toBe(200);
+      expect(res.body).toBeInstanceOf(Object);
+      expect(res.body).toHaveProperty("id");
+      expect(res.body).toHaveProperty("id", expect.any(Number));
+      expect(res.body).toHaveProperty("email");
+      expect(res.body).toHaveProperty("email", expect.any(String));
+      expect(res.body).toHaveProperty("latitude");
+      expect(res.body).toHaveProperty(
+        "latitude",
+        expect.any(String),
+        data.latitude
+      );
+      expect(res.body).toHaveProperty("longitude");
+      expect(res.body).toHaveProperty(
+        "longitude",
+        expect.any(String),
+        data.longitude
+      );
+    });
+  });
+});
+
 // describe(`DELETE /staffs`, () => {
 //   describe(`DELETE /staffs sukses`, () => {
 //     it(`should return an object with status 200`, async () => {

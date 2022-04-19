@@ -196,16 +196,12 @@ describe(`POST /customers/transactions`, () => {
 
 describe(`PUT /staffs/transactions`, () => {
   describe(`PUT /staffs/transactions sukses`, () => {
-    it(`should return object with status 201`, async () => {
-      const data = {
-        StaffId: 1,
-        productArrays: [1, 2, 3, 4],
-      };
+    it(`should return object with status 200`, async () => {
       const res = await request(app)
-        .put("/staffs/transactions")
-        .send(data)
-        .set("access_token", token_user);
-      expect(res.status).toBe(201);
+        .put("/staffs/transactions/1")
+        .send()
+        .set("access_token", token_staff);
+      expect(res.status).toBe(200);
       expect(res.body).toBeInstanceOf(Object);
       expect(res.body).toHaveProperty("id");
       expect(res.body).toHaveProperty("id", expect.any(Number));
@@ -214,45 +210,42 @@ describe(`PUT /staffs/transactions`, () => {
       expect(res.body).toHaveProperty("StaffId");
       expect(res.body).toHaveProperty("StaffId", expect.any(Number), expect(1));
       expect(res.body).toHaveProperty("isPaid");
-      expect(res.body).toHaveProperty("isPaid", expect.any(Boolean), expect("false"));
+      expect(res.body).toHaveProperty("isPaid", expect.any(Boolean));
       expect(res.body).toHaveProperty("status");
-      expect(res.body).toHaveProperty("status", expect.any(String), expect("Pending"));
+      expect(res.body).toHaveProperty("status", expect.any(String), expect("done"));
     });
   });
 
   describe(`PUT /staffs/transactions failed create TransactionProducts`, () => {
-    it(`should return object with status 400`, async () => {
-      const data = {
-        StaffId: 1,
-        productArrays: [],
-      };
+    it(`should return object with status 404`, async () => {
       const res = await request(app)
-        .put("/staffs/transactions")
-        .send(data)
-        .set("access_token", token_user);
-      expect(res.status).toBe(400);
+        .put("/staffs/transactions/1000")
+        .send()
+        .set("access_token", token_staff);
+        console.log(res.body, `<<<<<<<<ERROR`);
+      expect(res.status).toBe(404);
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
       expect(res.body).toHaveProperty(
         "Error",
-        "Fail to create TransactionProducts"
+        "Transaction not found"
       );
     });
   });
 
-  describe(`PUT /staffs/transactions failed`, () => {
-    it(`should return object with status 500`, async () => {
-      const data = {
-        StaffId: 2,
-      };
-      const res = await request(app)
-        .put("/staffs/transactions")
-        .send(data)
-        .set("access_token", token_user);
-      expect(res.status).toBe(500);
-      expect(res.body).toHaveProperty("Error");
-      expect(res.body).toHaveProperty("Error", expect.any(String));
-      expect(res.body).toHaveProperty("Error", "Internal server error");
-    });
-  });
+  // describe(`PUT /staffs/transactions failed`, () => {
+  //   it(`should return object with status 500`, async () => {
+  //     const data = {
+  //       StaffId: 2,
+  //     };
+  //     const res = await request(app)
+  //       .put("/staffs/transactions")
+  //       .send(data)
+  //       .set("access_token", token_user);
+  //     expect(res.status).toBe(500);
+  //     expect(res.body).toHaveProperty("Error");
+  //     expect(res.body).toHaveProperty("Error", expect.any(String));
+  //     expect(res.body).toHaveProperty("Error", "Internal server error");
+  //   });
+  // });
 });

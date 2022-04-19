@@ -1,4 +1,9 @@
-const { Transaction, Product, Customer, TransactionProduct } = require("../models");
+const {
+  Transaction,
+  Product,
+  Customer,
+  TransactionProduct,
+} = require("../models");
 const {
   sequelize,
   Sequelize: { Op },
@@ -9,35 +14,38 @@ class Controller {
   static async addTransaction(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      const { StaffId, productArrays, totalPrice } = req.body;
+      const { StaffId, productArrays, totalPrice, latitude, longitude } =
+        req.body;
       const { CustomerId } = req.customer;
       console.log(StaffId, CustomerId, `<<<<<<<<<<<<<`);
       let newTransaction = await Transaction.create(
         {
           CustomerId,
           StaffId,
-          totalPrice
+          totalPrice,
+          latitude,
+          longitude,
         },
         { transaction: t }
       );
-      
+
       //!Bulk Create TP
       let TPArrays = productArrays.map((e) => {
-        let result = {}
-        result.TransactionId = newTransaction.id
-        result.ProductId = e
+        let result = {};
+        result.TransactionId = newTransaction.id;
+        result.ProductId = e;
         result.createdAt = new Date();
         result.updatedAt = new Date();
-        return result
+        return result;
       });
 
       let newTP = await TransactionProduct.bulkCreate(TPArrays, {
         transaction: t,
-        returning: true
+        returning: true,
       });
 
       if (!newTP.length) {
-        throw {name: "fail TP bulkCreate"}
+        throw { name: "fail TP bulkCreate" };
       }
 
       await t.commit();
@@ -92,7 +100,7 @@ class Controller {
   static async getTransactionById(req, res, next) {
     try {
       const { transactionId } = req.params;
-      console.log(req.params, 'kontol2')
+      console.log(req.params, "kontol2");
       const transaction = await Transaction.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -100,7 +108,7 @@ class Controller {
         },
         include: {
           model: Product,
-          attributes: { exclude: ["createdAt", "updatedAt"] }
+          attributes: { exclude: ["createdAt", "updatedAt"] },
         },
       });
       if (!transaction) {
@@ -140,43 +148,10 @@ class Controller {
     }
   }
 
-  static async editTransaction(req, res, next) {
+  static async completeTransaction(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      // const {
-      //   pickupDate,
-      //   deliveryDate,
-      //   status,
-      //   isPaid,
-      //   longitude,
-      //   latitude,
-      //   totalPrice,
-      // } = req.body;
       const { transactionId } = req.params;
-
-      // let temp = {};
-
-      // if (pickupDate) {
-      //   temp.pickupDate = pickupDate;
-      // }
-      // if (deliveryDate) {
-      //   temp.deliveryDate = deliveryDate;
-      // }
-      // if (status) {
-      //   temp.status = status;
-      // }
-      // if (isPaid) {
-      //   temp.isPaid = isPaid;
-      // }
-      // if (longitude) {
-      //   temp.longitude = longitude;
-      // }
-      // if (latitude) {
-      //   temp.latitude = latitude;
-      // }
-      // if (totalPrice) {
-      //   temp.totalPrice = latitude;
-      // }
 
       const transaction = await Transaction.findByPk(transactionId);
 
@@ -184,13 +159,16 @@ class Controller {
         throw { name: "transactionNotFound" };
       }
 
-      let newTransaction = await Transaction.update({status:'done'}, {
-        where: {
-          id: transactionId,
-        },
-        returning: true,
-        transaction: t,
-      });
+      let newTransaction = await Transaction.update(
+        { status: "done" },
+        {
+          where: {
+            id: transactionId,
+          },
+          returning: true,
+          transaction: t,
+        }
+      );
 
       await t.commit();
       res.status(200).json(newTransaction[1][0]);
@@ -199,32 +177,6 @@ class Controller {
       next(error);
     }
   }
-
-  // static async deleteTransaction(req, res, next) {
-  //   const t = await sequelize.transaction();
-  //   try {
-  //     const { transactionId } = req.params;
-
-  //     const transaction = await Transaction.findByPk(transactionId);
-
-  //     if (!transaction) {
-  //       throw { name: "transactionNotFound" };
-  //     }
-
-  //     await Transaction.destroy({
-  //       where: {
-  //         id: transactionId,
-  //       },
-  //       transaction: t,
-  //     });
-
-  //     await t.commit();
-  //     res.status(200).json({ message: `Transaction Deleted` });
-  //   } catch (error) {
-  //     await t.rollback();
-  //     next(error);
-  //   }
-  // }
 }
 
 module.exports = Controller;
