@@ -214,8 +214,18 @@ describe(`GET /staffs`, () => {
     it(`should return an object with status 200`, async () => {
       const res = await request(app).get("/staffs/1")
       expect(res.status).toBe(200);
-      // expect(res.body).toHaveProperty("access_token");
-      // expect(res.body).toHaveProperty("access_token", expect.any(String));
+    });
+  });
+
+  describe(`GET /staffs fail`, () => {
+    it(`should return an object with status 404`, async () => {
+      const res = await request(app).get("/staffs/100")
+      expect(res.status).toBe(404);
+    });
+
+    it(`should return an object with status 401`, async () => {
+      const res = await request(app).patch("/staffs").set('access_token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdGFmZklkIjo0LCJlbWFpbCI6ImFkbWluNjk3MUBnbWFpbC5jb20iLCJpYXQiOjE2NTAzOTMzNzl9.sCfaeZr9-Bb1FlgBffZQE-tQPbIpD3c_GVQiOgDOJA8')
+      expect(res.status).toBe(401);
     });
   });
 })

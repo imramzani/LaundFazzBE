@@ -29,9 +29,9 @@ function errorHandler(err, req, res, next) {
     // case "custTransactionAuthz Failed":
     //   res.status(403).json({ Error: "Forbidden to modify or read item" });
     //   break;
-    case "customerNotFound":
-      res.status(404).json({ Error: "Customer not found" });
-      break;
+    // case "customerNotFound":
+    //   res.status(404).json({ Error: "Customer not found" });
+    //   break;
     case "staffNotFound":
       res.status(404).json({ Error: "Staff not found" });
       break;

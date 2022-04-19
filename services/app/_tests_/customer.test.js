@@ -193,12 +193,12 @@ describe(`GET /customers/`, () => {
 
   describe(`GET /customers/ fail`, () => {
     it(`should return an object with status 401`, async () => {
-      const wrong_token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxMCwiZW1haWwiOiJhbmRyaXphbC5jc0BnbWFpbC5jb20iLCJpYXQiOjE2NTAyMjAyNTZ9.HG6HH3C-u2e7UpEHvY6YaCBG6Qkwu4FMBpsMKvuzau0";
+      // const wrong_token =
+      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxMCwiZW1haWwiOiJhbmRyaXphbC5jc0BnbWFpbC5jb20iLCJpYXQiOjE2NTAyMjAyNTZ9.HG6HH3C-u2e7UpEHvY6YaCBG6Qkwu4FMBpsMKvuzau0";
       const res = await request(app)
         .get("/customers")
         .send()
-        .set("access_token", wrong_token);
+        .set("access_token", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxNCwiZW1haWwiOiJhZG1pbjY5QGdtYWlsLmNvbSIsImlhdCI6MTY1MDM5Mzg3NH0.Tr4CyuEdRe6NQJRZKqoEL1w6_mur1GSZHZevsUbw95s');
       // console.log(res, `ERROR`);
       expect(res.status).toBe(401);
       expect(res.body).toHaveProperty("Error");
