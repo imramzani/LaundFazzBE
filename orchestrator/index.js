@@ -81,13 +81,29 @@ const typeDefs = gql`
     phoneNumber: String
   }
 
+  type dataInvoice {
+    id: String
+    external_id: String
+    user_id: String
+    status: String
+    merchant_name: String
+    amount: Int
+    invoice_url: String
+    expiry_date: String
+  }
+
+  type invoiceXendit {
+    transaction: Transaction
+    data: dataInvoice
+  }
+
   type Query {
     getCustomerName: CustomerName
     getProducts: [Product]
     getStaffTransactions: [Transaction]
     getStaffTransactionById(id: ID!): Transaction
     getUserTransactions: [Transaction]
-    getUserTransactionById(id: ID!): Transaction
+    getUserTransactionById(id: ID!): invoiceXendit
     loginUser(email: ID, password: String!): LogInResponse
     loginStaff(email: ID, password: String!): LogInResponse
     getStaff(id: ID!): Staff
@@ -319,7 +335,6 @@ const resolvers = {
       try {
         const newTransaction = await axios.put(
           `http://localhost:3000/staffs/transactions/${args.id}`,
-          temp,
           {
             headers: {
               access_token: token_staff,

@@ -9,7 +9,7 @@ router.post("/login", Controller.login);
 
 router.use(authentication);
 
-router.get("/", Controller.profile);;
+router.get("/", Controller.profile);
 router.use("/transactions", transactions);
 
 module.exports = router;
