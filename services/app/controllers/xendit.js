@@ -6,7 +6,7 @@ class Controller {
     try {
       //COMMENT YANG ADA DISINI JANGAN DI HAPUS
       const { external_id } = req.body;
-      // console.log(req.body, `MASUK XENDIT CALLBACK`);
+      console.log(req.body, `MASUK XENDIT CALLBACK`);
       const arrayId = external_id.split("_");
       const transactionById = await Transaction.findByPk(arrayId[0]);
       const customerById = await Customer.findByPk(arrayId[1]);

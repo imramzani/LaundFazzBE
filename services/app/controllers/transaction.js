@@ -82,14 +82,19 @@ class Controller {
     try {
       const { CustomerId } = req.customer;
       const transactions = await Transaction.findAll({
-        attributes: { exclude: ["createdAt", "updatedAt"] },
+        attributes: { exclude: ["updatedAt"] },
         where: {
           CustomerId,
         },
-        include: {
-          model: Customer,
-          attributes: ["name"],
-        },
+        include: [
+          {
+            model: Customer,
+            attributes: ["name"],
+          },
+          {
+            model: Product,
+          },
+        ],
       });
 
       res.status(200).json(transactions);
@@ -101,7 +106,7 @@ class Controller {
   static async getTransactionById(req, res, next) {
     try {
       const { transactionId } = req.params;
-      console.log(req.params, "kontol2");
+      // console.log(req.params, "kontol2");
       const transaction = await Transaction.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -130,6 +135,7 @@ class Controller {
             amount: transaction.totalPrice,
             payer_email: "customer@domain.com",
             description: "Invoice Demo #123",
+            success_redirect_url: "http://localhost:3000/myhistory",
           },
           {
             headers: {
@@ -149,9 +155,33 @@ class Controller {
     }
   }
 
+  static async getStaffTransactionById(req, res, next) {
+    try {
+      const { transactionId } = req.params;
+      const transaction = await Transaction.findOne({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        where: {
+          id: transactionId,
+        },
+        include: {
+          model: Product,
+        },
+      });
+      if (!transaction) {
+        throw {
+          name: "transactionNotFound",
+        };
+      }
+      res.status(200).json(transaction);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async completeTransaction(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      console.log(`COMPLETE TRANS`);
       const { transactionId } = req.params;
 
       const transaction = await Transaction.findByPk(transactionId);

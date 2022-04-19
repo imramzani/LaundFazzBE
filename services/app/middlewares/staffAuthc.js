@@ -7,7 +7,7 @@ let authentication = async (req, res, next) => {
     const payload = verifyToken(access_token);
 
     const staff = await Staff.findByPk(payload.StaffId);
-    // console.log(`MASUK AUTHC`);
+    console.log(staff, payload, `MASUK AUTHC`);
     if (!staff) {
       throw {
         name: `staffAuthc Failed`,

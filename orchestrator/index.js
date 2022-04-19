@@ -35,11 +35,32 @@ const typeDefs = gql`
     latitude: String
     totalPrice: Int
     Products: [TransactionGetProducts]
+    createdAt: String
+  }
+
+  type TransactionUser {
+    id: ID
+    CustomerId: ID
+    StaffId: ID
+    isPaid: Boolean
+    status: String
+    pickupDate: String
+    deliveryDate: String
+    longitude: String
+    latitude: String
+    totalPrice: Int
+    Products: [TransactionGetProducts]
+    Customer: CustomerN
+    createdAt: String
   }
 
   type CustomerName {
     name: String
     email: String
+  }
+
+  type CustomerN {
+    name: String
   }
 
   type Product {
@@ -59,8 +80,7 @@ const typeDefs = gql`
   type TransactionGetProducts {
     id: ID
     name: String
-    Price: Int
-    Product: Product
+    price: Int
     TransactionProduct: TP
   }
 
@@ -153,7 +173,7 @@ const resolvers = {
     //! Transactions Staff
     getStaffTransactions: async (_, args) => {
       try {
-        // await redis.del("transactions");
+        await redis.del("transactions");
         const transactionsCache = await redis.get("transactions");
 
         if (transactionsCache) {
@@ -201,7 +221,7 @@ const resolvers = {
     //! Transactions User
     getUserTransactions: async (_, args) => {
       try {
-        // await redis.del("userTransactions");
+        await redis.del("userTransactions");
         const transactionsCache = await redis.get("userTransactions");
 
         if (transactionsCache) {
@@ -291,6 +311,7 @@ const resolvers = {
     },
     getStaff: async (_, args) => {
       try {
+        console.log(`Masuk`);
         const staff = await axios.get(
           `http://localhost:3000/staffs/${args.id}`
         );
@@ -306,6 +327,7 @@ const resolvers = {
   Mutation: {
     userAddTransaction: async (_, args) => {
       const { StaffId, productArrays, totalPrice, longitude, latitude } = args;
+      console.log(args, `ARGS`);
 
       try {
         const newTransaction = await axios.post(
@@ -333,8 +355,10 @@ const resolvers = {
     },
     putTransaction: async (_, args) => {
       try {
+        console.log(`MASUK IF`, args);
         const newTransaction = await axios.put(
           `http://localhost:3000/staffs/transactions/${args.id}`,
+          {},
           {
             headers: {
               access_token: token_staff,
