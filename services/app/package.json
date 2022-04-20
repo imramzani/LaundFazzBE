@@ -11,6 +11,7 @@
     "productTest": "npx jest product.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "transactionTest": "npx jest transaction.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "xenditTest": "npx jest xendit.test.js --detectOpenHandles --forceExit --runInBand --coverage",
+    "socketTest": "npx jest socket.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "test": "npx jest --detectOpenHandles --forceExit --runInBand --coverage"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "pg": "^8.7.3",
     "sequelize": "^6.18.0",
     "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "twilio": "^3.76.1"
   },
   "devDependencies": {

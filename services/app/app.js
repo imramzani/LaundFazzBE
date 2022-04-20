@@ -8,46 +8,46 @@ const cors = require("cors");
 const routes = require("./routes");
 // const UserRouter = require('./routes/userRouter')
 
-const http = require("http");
-const { Server } = require("socket.io");
-const PORT = 3002;
+// const http = require("http");
+// const { Server } = require("socket.io");
+// const PORT = 3002;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: "*", //ubahjadi localhost utk react
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: "*", //ubahjadi localhost utk react
+//     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+//     preflightContinue: false,
+//     optionsSuccessStatus: 204,
+//   },
+// });
 
-let arrChat = [];
-io.on("connection", (socket) => {
-  console.log("User Connected :", socket.id);
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User IDL ${socket.id} joined room ${data}`);
-  });
+// let arrChat = [];
+// io.on("connection", (socket) => {
+//   console.log("User Connected :", socket.id);
+//   socket.on("join_room", (data) => {
+//     socket.join(data);
+//     console.log(`User IDL ${socket.id} joined room ${data}`);
+//   });
 
-  socket.on("disconnect", () => {
-    arrChat = [];
-    console.log("User Disconnected");
-  });
-  socket.on("chatFromClient", (payload) => {
-    // console.log(req.Credentials)
-    console.log(payload, "<<<<<Test payload");
-    arrChat;
-    arrChat.push(payload);
-    console.log(arrChat);
-    io.to(payload.room).emit("messageFromServer", arrChat);
-  });
-});
+//   socket.on("disconnect", () => {
+//     arrChat = [];
+//     console.log("User Disconnected");
+//   });
+//   socket.on("chatFromClient", (payload) => {
+//     // console.log(req.Credentials)
+//     console.log(payload, "<<<<<Test payload");
+//     arrChat;
+//     arrChat.push(payload);
+//     console.log(arrChat);
+//     io.to(payload.room).emit("messageFromServer", arrChat);
+//   });
+// });
 
 // server.listen(PORT, () => {
 //   console.log(`server on port ${PORT}`)
