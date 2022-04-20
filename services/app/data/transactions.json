@@ -5,7 +5,7 @@
     "isPaid": true,
     "status": "onProgress",
     "pickupDate": "2022-04-17T17:44:34.439Z",
-    "deliveryDate": null,
+    "deliveryDate": "2022-04-16T17:44:34.439Z",
     "longitude": "106.7783222",
     "latitude": "-6.2358401",
     "totalPrice": 90000
