@@ -4,9 +4,7 @@ const { Transaction, Customer } = require("../models");
 class Controller {
   static async postXendit(req, res, next) {
     try {
-      //COMMENT YANG ADA DISINI JANGAN DI HAPUS
       const { external_id } = req.body;
-      console.log(req.body, `MASUK XENDIT CALLBACK`);
       const arrayId = external_id.split("_");
       const transactionById = await Transaction.findByPk(arrayId[0]);
       const customerById = await Customer.findByPk(arrayId[1]);
@@ -21,9 +19,7 @@ class Controller {
       });
 
       let price = transactionById.totalPrice.toLocaleString("id")
-      console.log(customerById.email, `EMAIL`);
       let mailOptions = {
-        // html: 'Embedded image: <img src="cid:xendit"/>',
         attachments: [
           {
             filename: "xendit.png",
@@ -45,13 +41,11 @@ class Controller {
           nama: `${customerById.name}`,
           transactionId:`${arrayId[0]}`,
           price:`${price}`
-          // image: ''
         },
       };
 
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
-          console.log(err, "vvvv");
           throw { name: "nodemailer error" };
         }
       });

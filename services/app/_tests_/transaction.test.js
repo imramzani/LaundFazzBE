@@ -148,7 +148,6 @@ describe(`GET /staffs/transactions`, () => {
         .get("/staffs/transactions")
         .send()
         .set("access_token", wrong_token);
-      // console.log(res, `ERROR`);
       expect(res.status).toBe(401);
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
@@ -260,29 +259,12 @@ describe(`PUT /staffs/transactions`, () => {
         .put("/staffs/transactions/1000")
         .send()
         .set("access_token", token_staff);
-      // console.log(res.body, `<<<<<<<<ERROR`);
       expect(res.status).toBe(404);
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
       expect(res.body).toHaveProperty("Error", "Transaction not found");
     });
   });
-
-  // describe(`PUT /staffs/transactions failed`, () => {
-  //   it(`should return object with status 500`, async () => {
-  //     const data = {
-  //       StaffId: 2,
-  //     };
-  //     const res = await request(app)
-  //       .put("/staffs/transactions")
-  //       .send(data)
-  //       .set("access_token", token_user);
-  //     expect(res.status).toBe(500);
-  //     expect(res.body).toHaveProperty("Error");
-  //     expect(res.body).toHaveProperty("Error", expect.any(String));
-  //     expect(res.body).toHaveProperty("Error", "Internal server error");
-  //   });
-  // });
 });
 
 describe(`GET /customers/transactions`, () => {
@@ -295,7 +277,6 @@ describe(`GET /customers/transactions`, () => {
       expect(res.status).toBe(200);
       expect(res.body).toBeInstanceOf(Object);
       expect(res.body).toHaveProperty("data");
-      // expect(res.body.data).toBeInstanceOf(Object);
       expect(res.body).toHaveProperty("transaction");
       expect(res.body.transaction).toBeInstanceOf(Object);
       expect(res.body.transaction).toHaveProperty("id");
@@ -335,7 +316,6 @@ describe(`GET /customers/transactions`, () => {
         .get("/customers/transactions/6")
         .send()
         .set("access_token", token_user);
-      // console.log(res.body, `<<<<<<<<INI PENDINT`);
       expect(res.status).toBe(200);
       expect(res.body).toBeInstanceOf(Object);
       expect(res.body).toHaveProperty("data");
@@ -379,7 +359,6 @@ describe(`GET /customers/transactions`, () => {
         .get("/customers/transactions/1000")
         .send()
         .set("access_token", token_user);
-      // console.log(res.body, `<<<<<<<<ERROR`);
       expect(res.status).toBe(404);
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
@@ -419,7 +398,6 @@ describe(`GET /staffs/transactions`, () => {
         .get("/staffs/transactions/1000")
         .send()
         .set("access_token", token_staff);
-      // console.log(res.body, `<<<<<<<<ERROR`);
       expect(res.status).toBe(404);
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
