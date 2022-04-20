@@ -103,8 +103,7 @@ describe(`GET /staffs/transactions`, () => {
       expect(res.status).toBe(200);
       expect(Array.isArray(res.body)).toBeTruthy();
       expect(res.body.length).toBeGreaterThan(0);
-      expect(Array.isArray(res.body[0].Products)).toBeTruthy();
-      expect(res.body[0].Products.length).toBeGreaterThan(0);
+      expect(res.body[0].TransactionProducts.length).toBeGreaterThan(0);
       expect(res.body[0]).toHaveProperty("id");
       expect(res.body[0]).toHaveProperty("id", expect.any(Number));
       expect(res.body[0]).toHaveProperty("CustomerId");
@@ -125,18 +124,6 @@ describe(`GET /staffs/transactions`, () => {
       expect(res.body[0]).toHaveProperty("latitude", expect.any(String));
       expect(res.body[0]).toHaveProperty("totalPrice");
       expect(res.body[0]).toHaveProperty("totalPrice", expect.any(Number));
-      expect(res.body[0].Products[0]).toHaveProperty("id");
-      expect(res.body[0].Products[0]).toHaveProperty("id", expect.any(Number));
-      expect(res.body[0].Products[0]).toHaveProperty("name");
-      expect(res.body[0].Products[0]).toHaveProperty(
-        "name",
-        expect.any(String)
-      );
-      expect(res.body[0].Products[0]).toHaveProperty("price");
-      expect(res.body[0].Products[0]).toHaveProperty(
-        "price",
-        expect.any(Number)
-      );
     });
   });
 
@@ -267,8 +254,8 @@ describe(`PUT /staffs/transactions`, () => {
   });
 });
 
-describe(`GET /customers/transactions`, () => {
-  describe(`GET /customers/transactions sukses get transaction with status not "pending"`, () => {
+describe(`GET /customers/transactions/:transactionId`, () => {
+  describe(`GET /customers/transactions/:transactionId sukses get transaction with status not "pending"`, () => {
     it(`should return object with status 200`, async () => {
       const res = await request(app)
         .get("/customers/transactions/1")
@@ -310,7 +297,7 @@ describe(`GET /customers/transactions`, () => {
     });
   });
 
-  describe(`GET /customers/transactions sukses get transaction with status "pending"`, () => {
+  describe(`GET /customers/transactions/:transactionId sukses get transaction with status "pending"`, () => {
     it(`should return object with status 200`, async () => {
       const res = await request(app)
         .get("/customers/transactions/6")
@@ -353,7 +340,7 @@ describe(`GET /customers/transactions`, () => {
     });
   });
 
-  describe(`GET /customers/transactions failed find Transactions`, () => {
+  describe(`GET /customers/transactions/:transactionId failed find Transactions`, () => {
     it(`should return object with status 404`, async () => {
       const res = await request(app)
         .get("/customers/transactions/1000")
@@ -368,8 +355,8 @@ describe(`GET /customers/transactions`, () => {
 
 });
 
-describe(`GET /staffs/transactions`, () => {
-  describe(`GET /staffs/transactions sukses get transaction`, () => {
+describe(`GET /staffs/transactions/:transactionId`, () => {
+  describe(`GET /staffs/transactions/:transactionId sukses get transaction`, () => {
     it(`should return object with status 200`, async () => {
       const res = await request(app)
         .get("/staffs/transactions/1")
@@ -392,7 +379,7 @@ describe(`GET /staffs/transactions`, () => {
     });
   });
 
-  describe(`GET /staffs/transactions failed find Transactions`, () => {
+  describe(`GET /staffs/transactions/:transactionId failed find Transactions`, () => {
     it(`should return object with status 404`, async () => {
       const res = await request(app)
         .get("/staffs/transactions/1000")

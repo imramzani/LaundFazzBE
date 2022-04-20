@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Transaction.belongsTo(models.Customer);
       Transaction.belongsTo(models.Staff);
+      Transaction.hasMany(models.TransactionProduct);
       Transaction.belongsToMany(models.Product, {
         foreignKey: "TransactionId",
         through: models.TransactionProduct,
