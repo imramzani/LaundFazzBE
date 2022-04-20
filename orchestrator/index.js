@@ -34,7 +34,7 @@ const typeDefs = gql`
     longitude: String
     latitude: String
     totalPrice: Int
-    Products: [TransactionGetProducts]
+    TransactionProducts: [TransactionProduct]
     createdAt: String
   }
 
@@ -49,7 +49,7 @@ const typeDefs = gql`
     longitude: String
     latitude: String
     totalPrice: Int
-    Products: [TransactionGetProducts]
+    TransactionProducts: [TransactionProduct]
     Customer: CustomerN
     createdAt: String
   }
@@ -74,7 +74,6 @@ const typeDefs = gql`
     TransactionId: ID
     ProductId: ID
     Product: Product
-    Transaction: Transaction
   }
 
   type TransactionGetProducts {

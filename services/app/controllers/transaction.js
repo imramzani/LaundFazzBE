@@ -9,7 +9,7 @@ const {
   Sequelize: { Op },
 } = require("../models");
 const axios = require("axios");
-const {transporter} = require('../helpers/nodemailer')
+const { transporter } = require("../helpers/nodemailer");
 
 class Controller {
   static async addTransaction(req, res, next) {
@@ -63,8 +63,12 @@ class Controller {
       const transactions = await Transaction.findAll({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         include: {
-          model: Product,
+          model: TransactionProduct,
           attributes: { exclude: ["createdAt", "updatedAt"] },
+          include: {
+            model: Product,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
         },
         where: {
           StaffId,
@@ -92,7 +96,12 @@ class Controller {
             attributes: ["name"],
           },
           {
-            model: Product,
+            model: TransactionProduct,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            include: {
+              model: Product,
+              attributes: { exclude: ["createdAt", "updatedAt"] },
+            },
           },
         ],
       });
@@ -113,8 +122,12 @@ class Controller {
           id: transactionId,
         },
         include: {
-          model: Product,
+          model: TransactionProduct,
           attributes: { exclude: ["createdAt", "updatedAt"] },
+          include: {
+            model: Product,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
         },
       });
       if (!transaction) {
@@ -164,7 +177,12 @@ class Controller {
           id: transactionId,
         },
         include: {
-          model: Product,
+          model: TransactionProduct,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+          include: {
+            model: Product,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
         },
       });
       if (!transaction) {
@@ -189,7 +207,7 @@ class Controller {
       if (!transaction) {
         throw { name: "transactionNotFound" };
       }
-      const userToEmail = await Customer.findByPk(transaction.CustomerId)
+      const userToEmail = await Customer.findByPk(transaction.CustomerId);
       let newTransaction = await Transaction.update(
         { status: "done" },
         {
@@ -201,34 +219,34 @@ class Controller {
         }
       );
       let mailOptions = {
-          // html: 'Embedded image: <img src="cid:xendit"/>',
-          attachments: [
-            {
-              filename: "logo.png",
-              path: "./views/logo.png",
-              cid: "logo", //same cid value as in the html img src
-            },
-          ],
-          from: "testinghaloprof@gmail.com",
-          to: `${userToEmail.email}`,
-          subject: "Laundry Fazz",
-          text: `Laundry Fazz done`,
-          template: "done",
-          context: {
-            TransactionId:`${transactionId}`,
-            status:`Done`
-            // image: ''
+        // html: 'Embedded image: <img src="cid:xendit"/>',
+        attachments: [
+          {
+            filename: "logo.png",
+            path: "./views/logo.png",
+            cid: "logo", //same cid value as in the html img src
           },
-        };
-  
-        transporter.sendMail(mailOptions, (err, info) => {
-          if (err) {
-            console.log(err, "vvvv");
-            throw { name: "nodemailer error" };
-          } else {
-            // console.log("Email Sent:" + info.response);
-          }
-        });
+        ],
+        from: "testinghaloprof@gmail.com",
+        to: `${userToEmail.email}`,
+        subject: "Laundry Fazz",
+        text: `Laundry Fazz done`,
+        template: "done",
+        context: {
+          TransactionId: `${transactionId}`,
+          status: `Done`,
+          // image: ''
+        },
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err, "vvvv");
+          throw { name: "nodemailer error" };
+        } else {
+          // console.log("Email Sent:" + info.response);
+        }
+      });
       await t.commit();
       res.status(200).json(newTransaction[1][0]);
     } catch (error) {
