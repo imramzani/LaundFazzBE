@@ -4,8 +4,6 @@ const server = require('../socketConfig');
 describe('Suite of unit tests', function () {
     //ngejalain servernya
     server.attach(3010);
-    // let sender;
-    // let receiver;
     let socket;
 
     beforeAll(function (done) {
@@ -24,11 +22,8 @@ describe('Suite of unit tests', function () {
     afterAll(function (done) {
         // Cleanup
         socket.close();
-        // server.close();
+        server.close();
         done();
-        // socket.close(() => {
-        //     done();
-        // });
 
     });
 

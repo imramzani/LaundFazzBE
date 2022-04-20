@@ -19,22 +19,6 @@ let loginData = {
   email: "tested@gmail.com",
   password: "tested1",
 };
-// beforeAll(async () => {
-//   try {
-//     let data = JSON.parse(fs.readFileSync("./data/staffs.json", "utf-8"));
-//     data.forEach((el) => {
-//       el.password = hash(el.password);
-//       el.createdAt = new Date();
-//       el.updatedAt = new Date();
-//     });
-//     await queryInterface.bulkInsert("Stores", data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-// afterAll(async () => {
-//   await queryInterface.bulkDelete("Staffs", null);
-// });
 
 describe(`POST /Staff/register`, () => {
   describe(`POST /Staff/register sukses`, () => {

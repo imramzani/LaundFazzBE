@@ -12,7 +12,7 @@
     "transactionTest": "npx jest transaction.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "xenditTest": "npx jest xendit.test.js --detectOpenHandles --forceExit --runInBand --coverage",
     "socketTest": "npx jest socket.test.js --detectOpenHandles --forceExit --runInBand --coverage",
-    "test": "npx jest --detectOpenHandles --forceExit --runInBand --coverage"
+    "test": "npx jest --detectOpenHandles --forceExit --runInBand --coverage --silent"
   },
   "repository": {
     "type": "git",
