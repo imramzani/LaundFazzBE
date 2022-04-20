@@ -16,22 +16,22 @@ let registerData = {
   phoneNumber: "tested1",
   name: "test",
 };
-beforeAll(async () => {
-  try {
-    let data = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"));
-    data.forEach((el) => {
-      el.password = hash(el.password);
-      el.createdAt = new Date();
-      el.updatedAt = new Date();
-    });
-    await queryInterface.bulkInsert("Customers", data);
-  } catch (error) {
-    console.log(error);
-  }
-});
-afterAll(async () => {
-  await queryInterface.bulkDelete("Customers", null);
-});
+// beforeAll(async () => {
+//   try {
+//     let data = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"));
+//     data.forEach((el) => {
+//       el.password = hash(el.password);
+//       el.createdAt = new Date();
+//       el.updatedAt = new Date();
+//     });
+//     await queryInterface.bulkInsert("Customers", data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+// afterAll(async () => {
+//   await queryInterface.bulkDelete("Customers", null);
+// });
 
 describe(`POST /customer/register`, () => {
   describe(`POST /customer/register sukses`, () => {
