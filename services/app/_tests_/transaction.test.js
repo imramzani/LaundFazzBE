@@ -11,6 +11,32 @@ const token_user =
 const token_staff =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdGFmZklkIjoxLCJlbWFpbCI6InNhbWFtYW5kcmUubWFuZHJhY29uQGdtYWlsLmNvbSIsImlhdCI6MTY1MDIyMzk0MH0.CUu5qHMla3qAnsl9u8ezYBDgPa79pZYJ_bfmlHobxJU";
 
+// beforeAll(async () => {
+//   try {
+//     let data = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"));
+//     data.forEach((el) => {
+//       el.password = hash(el.password);
+//       el.createdAt = new Date();
+//       el.updatedAt = new Date();
+//     });
+//     await queryInterface.bulkInsert("Customers", data);
+//     let dataStaff = JSON.parse(fs.readFileSync("./data/staffs.json", "utf-8"));
+//     dataStaff.forEach((el) => {
+//       el.password = hash(el.password);
+//       el.createdAt = new Date();
+//       el.updatedAt = new Date();
+//     });
+//     await queryInterface.bulkInsert("Stores", dataStaff);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+// afterAll(async () => {
+//   await queryInterface.bulkDelete("Customers", null);
+//   await queryInterface.bulkDelete("Staffs", null);
+
+// });
+
 describe(`GET /customers/transactions`, () => {
   describe(`GET /customers/transactions sukses`, () => {
     it(`should return an array of object with status 200`, async () => {
@@ -222,7 +248,7 @@ describe(`PUT /staffs/transactions`, () => {
         .put("/staffs/transactions/1000")
         .send()
         .set("access_token", token_staff);
-        console.log(res.body, `<<<<<<<<ERROR`);
+      console.log(res.body, `<<<<<<<<ERROR`);
       expect(res.status).toBe(404);
       expect(res.body).toHaveProperty("Error");
       expect(res.body).toHaveProperty("Error", expect.any(String));
