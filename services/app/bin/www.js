@@ -1,10 +1,15 @@
-const app = require("../app")
-const PORT = process.env.PORT || 3000;
+// const app = require("../app")
+// // const http = require('http')
+// const PORT = process.env.PORT || 3000;
+// // const server = http.createServer(app);
+// // const portServer = 3002
 
-app.listen(PORT, () => {
-  console.log(`Listening to PORT ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Listening to PORT ${PORT}`);
+// });
 
-// server.listen(PORT, () => {
-//   console.log(`server on port ${PORT}`)
+// server.listen(portServer, () => {
+//   console.log(`server on PORT ${portServer}`)
 // })
+
+// module.exports = server;
