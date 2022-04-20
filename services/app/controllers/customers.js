@@ -1,5 +1,4 @@
 const { Customer } = require("../models");
-// const { transporter } = require("../helpers/nodemailer");
 const { signToken } = require("../helpers/jwt");
 const { compare } = require("../helpers/bcrypt");
 const {
@@ -22,41 +21,6 @@ class Controller {
         },
         { transaction: t }
       );
-
-      // console.log(newCustomer, "kontol");
-      // let mailOptions = {
-      //   // html: 'Embedded image: <img src="cid:xendit"/>',
-      //   attachments: [
-      //     {
-      //       filename: "xendit.png",
-      //       path: "./views/xendit.png",
-      //       cid: "xendit", //same cid value as in the html img src
-      //     },
-      //     {
-      //       filename: "logo.png",
-      //       path: "./views/logo.png",
-      //       cid: "logo", //same cid value as in the html img src
-      //     },
-      //   ],
-      //   from: "testinghaloprof@gmail.com",
-      //   to: `bintangmuhammadwahid@gmail.com`,
-      //   subject: "Laundry Fazz",
-      //   text: `Telah register di Laundry Fazz.`,
-      //   template: "email",
-      //   context: {
-      //     nama: "test",
-      //     // image: ''
-      //   },
-      // };
-
-      // transporter.sendMail(mailOptions, (err, info) => {
-      //   if (err) {
-      //     console.log(err, "vvvv");
-      //     throw { name: "nodemailer error" };
-      //   } else {
-      //     console.log("Email Sent:" + info.response);
-      //   }
-      // });
       await t.commit();
 
       res.status(201).json(newCustomer);
@@ -69,7 +33,6 @@ class Controller {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      console.log(email,'vvvvvv')
 
       if (!email || !password) throw { name: "custLogin noInput" };
 
@@ -115,35 +78,11 @@ class Controller {
           id: CustomerId,
         },
       });
-      // if (!customer) {
-      //   throw {
-      //     name: "customerNotFound",
-      //   };
-      // }
       res.status(200).json(customer);
     } catch (error) {
       next(error);
     }
   }
-
-  // static async deleteUser(req, res, next) {
-  //   const t = await sequelize.transaction();
-  //   try {
-  //     const { CustomerId } = req.customer;
-  //     const customer = await Customer.destroy({
-  //       where: {
-  //         id: CustomerId,
-  //       },
-  //       transaction: t,
-  //     });
-
-  //     await t.commit();
-  //     res.status(200).json({ message: `Customer Deleted` });
-  //   } catch (error) {
-  //     await t.rollback();
-  //     next(error);
-  //   }
-  // }
 }
 
 module.exports = Controller;

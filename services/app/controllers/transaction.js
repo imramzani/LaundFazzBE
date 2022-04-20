@@ -18,7 +18,6 @@ class Controller {
       const { StaffId, productArrays, totalPrice, latitude, longitude } =
         req.body;
       const { CustomerId } = req.customer;
-      console.log(StaffId, CustomerId, `<<<<<<<<<<<<<`);
       let newTransaction = await Transaction.create(
         {
           CustomerId,
@@ -115,7 +114,6 @@ class Controller {
   static async getTransactionById(req, res, next) {
     try {
       const { transactionId } = req.params;
-      // console.log(req.params, "kontol2");
       const transaction = await Transaction.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -160,7 +158,6 @@ class Controller {
         );
         res.status(200).json({ transaction, data });
       } else {
-        console.log(`MASUK ELSE`);
         res.status(200).json({ transaction, data: null });
       }
     } catch (error) {
@@ -199,7 +196,6 @@ class Controller {
   static async completeTransaction(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      console.log(`COMPLETE TRANS`);
       const { transactionId } = req.params;
 
       const transaction = await Transaction.findByPk(transactionId);
@@ -226,6 +222,7 @@ class Controller {
             path: "./views/logo.png",
             cid: "logo", //same cid value as in the html img src
           },
+
         ],
         from: "testinghaloprof@gmail.com",
         to: `${userToEmail.email}`,
@@ -238,15 +235,13 @@ class Controller {
           // image: ''
         },
       };
+  
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            throw { name: "nodemailer error" };
+          } 
+        });
 
-      transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.log(err, "vvvv");
-          throw { name: "nodemailer error" };
-        } else {
-          // console.log("Email Sent:" + info.response);
-        }
-      });
       await t.commit();
       res.status(200).json(newTransaction[1][0]);
     } catch (error) {

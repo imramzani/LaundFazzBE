@@ -2,8 +2,6 @@ const { sequelize } = require("../models");
 const { queryInterface } = sequelize;
 const request = require("supertest");
 const app = require("../app");
-const fs = require('fs')
-const { hash } = require('../helpers/bcrypt')
 const token_user =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxLCJlbWFpbCI6ImFuZHJpemFsLmNzQGdtYWlsLmNvbSIsImlhdCI6MTY1MDIyMDk2NX0.3aNbVzTNVCDI1Oubicm6eqbbFuXLV6Aa83cps_g4t4w"
 const dataXendit = {
@@ -75,55 +73,21 @@ const wrongdataXendit2 = {
     "payment_destination": "888888888888"
 }
 
-// beforeAll(async () => {
-//     try {
-//       let data = JSON.parse(fs.readFileSync("./data/customers.json", "utf-8"));
-//       data.forEach((el) => {
-//         el.password = hash(el.password);
-//         el.createdAt = new Date();
-//         el.updatedAt = new Date();
-//       });
-//       await queryInterface.bulkInsert("Customers", data);
-//       data = JSON.parse(fs.readFileSync("./data/transactions.json", "utf-8"));
-//       data.forEach((el) => {
-//         // el.password = hash(el.password);
-//         el.createdAt = new Date();
-//         el.updatedAt = new Date();
-//       });
-//       await queryInterface.bulkInsert("Transactions", data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   });
-//   afterAll(async () => {
-//     await queryInterface.bulkDelete("Customers", null, {restartIdentity:true, truncate:true, cascade:true
-//     });
-//     await queryInterface.bulkDelete("Transactions", null, {restartIdentity:true, truncate:true, cascade:true});
-//   });
-
-
 describe(`GET /customers/trancsaction/trancsactionId success`, () => {
     describe(`GET /customers/trancsaction/4 success`, () => {
         it(`should return an object with status 200`, async () => {
             const res = await request(app)
                 .get("/customers/transactions/4")
                 .set('access_token', token_user);
-            // console.log(res.body, 'kontol')
             expect(res.status).toBe(200);
-            // expect(res.body).toHaveProperty("trancsaction");
-            // expect(res.body).toHaveProperty("data");
-            // expect(res.body).toHaveProperty("msg", expect.any(String));
         });
 
         it(`should return an object with status 200 success`, async () => {
             const res = await request(app)
                 .get("/customers/transactions/1")
                 .set('access_token', token_user);
-            // console.log(res.body, 'kontol')
 
             expect(res.status).toBe(200);
-            // expect(res.body).toHaveProperty("msg");
-            // expect(res.body).toHaveProperty("msg", expect.any(String));
         });
     });
 
@@ -132,34 +96,16 @@ describe(`GET /customers/trancsaction/trancsactionId success`, () => {
             const res = await request(app)
                 .get("/customers/transactions/1")
                 .set('access_token', '12345');
-            // console.log(res.body, 'kontol')
 
             expect(res.status).toBe(401);
-            // expect(res.body).toHaveProperty("msg");
-            // expect(res.body).toHaveProperty("msg", expect.any(String));
         });
         it(`should return an object with status 404 fail`, async () => {
             const res = await request(app)
                 .get("/customers/transactions/100")
                 .set('access_token', token_user);
-            // console.log(res.body, 'kontol')
 
             expect(res.status).toBe(404);
-            // expect(res.body).toHaveProperty("msg");
-            // expect(res.body).toHaveProperty("msg", expect.any(String));
         });
-        // it(`should return an object with status 404 fail`, async () => {
-        //     const res = await request(app)
-        //         .get("/customers/transactions/100")
-        //         .set('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxNCwiZW1haWwiOiJhZG1pbjY5QGdtYWlsLmNvbSIsImlhdCI6MTY1MDMxMDUwMH0.56IdIhFTiAfJBC1m6Btxsa7zlES1URJJoWJHbO_Lg8k');
-        //     console.log(res.body, 'kontol')
-
-        //     expect(res.status).toBe(404);
-        //     expect(res.body).toHaveProperty("msg");
-        //     expect(res.body).toHaveProperty("msg", expect.any(String));
-        // });
-
-        // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklkIjoxNCwiZW1haWwiOiJhZG1pbjY5QGdtYWlsLmNvbSIsImlhdCI6MTY1MDMxMDUwMH0.56IdIhFTiAfJBC1m6Btxsa7zlES1URJJoWJHbO_Lg8k'
     });
 })
 

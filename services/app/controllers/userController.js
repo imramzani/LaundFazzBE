@@ -13,20 +13,6 @@ class UserController {
         name,
         phoneNumber,
       });
-      // let mailOptions = {
-      //   from: "testinghaloprof@gmail.com",
-      //   to: `${email}`,
-      //   subject: "Laundry Fazz",
-      //   text: `Telah register di Laundry Fazz.`,
-      // };
-
-      // transporter.sendMail(mailOptions, (err, info) => {
-      //   if (err) {
-      //     throw { name: "nodemailer error" };
-      //   } else {
-      //     console.log("Email Sent:" + info.response);
-      //   }
-      // });
       res.status(200).json(data);
     } catch (error) {
       next(error);

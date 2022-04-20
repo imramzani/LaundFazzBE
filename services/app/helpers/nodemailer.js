@@ -7,7 +7,6 @@ let transporter = nodemailer.createTransport({
 	},
 });
 const hbs = require('nodemailer-express-handlebars');
-// const { path } = require("../app");
 const handlebarsOption = {
 	viewEngine:{
 		extName:'.handlebars',
