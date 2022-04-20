@@ -20,6 +20,7 @@ class Controller {
         deliveryDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
       });
 
+      let price = transactionById.totalPrice.toLocaleString("id")
       console.log(customerById.email, `EMAIL`);
       let mailOptions = {
         // html: 'Embedded image: <img src="cid:xendit"/>',
@@ -42,6 +43,8 @@ class Controller {
         template: "email",
         context: {
           nama: `${customerById.name}`,
+          transactionId:`${arrayId[0]}`,
+          price:`${price}`
           // image: ''
         },
       };
